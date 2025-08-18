@@ -1,0 +1,57 @@
+---
+import type { MarkdownHeading } from 'astro';
+import groupHeadings from './groupHeadings';
+
+type Props = {
+  headings: MarkdownHeading[];
+};
+
+const { headings } = Astro.props;
+const filteredHeadings = headings.filter(
+  heading => heading.depth === 2 || heading.depth === 3
+);
+const headingGroups = groupHeadings(filteredHeadings);
+---
+
+<nav id="jl-toc">
+  <h2>On this page</h2>
+  <ul class="jl-toc-list">
+    {
+      headingGroups.map(group => (
+        <li>
+          <a href={`#${group.slug}`}>{group.text}</a>
+          {group.children.length > 0 && (
+            <ul>
+              {group.children.map(child => (
+                <li>
+                  <a href={`#${child.slug}`}>{child.text}</a>
+                </li>
+              ))}
+            </ul>
+          )}
+        </li>
+      ))
+    }
+  </ul>
+</nav>
+
+<style>
+  h2 {
+    font-size: var(--jl-font-size-h4);
+  }
+
+  ul {
+    list-style-type: none;
+  }
+
+  a {
+    color: var(--jl-color-text-secondary);
+    font-weight: var(--jl-font-weight-text);
+    font-size: var(--jl-font-size-xs);
+    text-decoration: none;
+  }
+
+  li {
+    margin-block: 0;
+  }
+</style>

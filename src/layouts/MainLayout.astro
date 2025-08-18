@@ -1,16 +1,34 @@
 ---
-const { frontmatter } = Astro.props;
+import AsideNav from '@components/AsideNav.astro';
+import Head from '@components/Head.astro';
+
+import config from '../../jotlynx.config.json';
+
+import '@fontsource-variable/lora';
+import '@fontsource-variable/open-sans';
+import '@fontsource-variable/open-sans/wght-italic.css';
+
+import '@/styles/reset.css';
+import '@/styles/base.css';
+import '@/styles/components.css';
 ---
 
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width" />
-    <meta name="generator" content={Astro.generator} />
-    <title>{frontmatter.title}</title>
-  </head>
+  <Head title={config.meta.title} description={config.meta.description} />
+
   <body>
-    <slot />
+    <AsideNav />
+    <main id="jl-main">
+      <slot />
+    </main>
   </body>
 </html>
+
+<style is:global>
+  @layer reset, base, components;
+
+  body {
+    display: grid;
+    grid-template-columns: min(20dvw, 240px) 1fr;
+  }
+</style>

@@ -1,0 +1,52 @@
+@layer reset {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+    margin: 0;
+    outline: 2px solid transparent;
+    padding: 0;
+    vertical-align: baseline;
+  }
+
+  body {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  dialog {
+    color: inherit;
+  }
+
+  img,
+  picture,
+  video,
+  canvas,
+  svg {
+    display: block;
+    max-width: 100%;
+  }
+
+  blockquote,
+  q {
+    quotes: none;
+  }
+  blockquote:before,
+  blockquote:after,
+  q:before,
+  q:after {
+    content: '';
+    content: none;
+  }
+
+  table {
+    border-collapse: collapse;
+    border-spacing: 0;
+  }
+
+  ol,
+  ul,
+  nav {
+    list-style: none;
+    padding: 0;
+  }
+}

@@ -1,0 +1,76 @@
+---
+import type { MarkdownLayoutProps } from 'astro';
+import MainLayout from './MainLayout.astro';
+import Head from '@components/Head.astro';
+import RightAside from '@components/RightAside.astro';
+
+type Props = MarkdownLayoutProps<{
+  title?: string;
+  created?: string;
+  updated?: string;
+}>;
+
+const { frontmatter, headings } = Astro.props;
+
+const title = frontmatter?.title;
+const created = frontmatter?.created
+  ? new Date(parseInt(frontmatter.created))
+  : null;
+const updated = frontmatter?.updated
+  ? new Date(parseInt(frontmatter.updated))
+  : null;
+---
+
+<Head title={title} />
+
+<MainLayout>
+  <div class="jl-article-container">
+    <article id="jl-md-article">
+      <h1 id="_top">{title}</h1>
+      {
+        created && (
+          <div class="jl-article-meta">
+            <p>
+              Posted: <span>{created.toLocaleDateString()}</span>
+            </p>
+            {updated && (
+              <p>
+                Last updated: <span>{updated.toLocaleDateString()}</span>
+              </p>
+            )}
+          </div>
+        )
+      }
+      <slot />
+    </article>
+  </div>
+  {headings && headings.length > 0 && <RightAside headings={headings} />}
+</MainLayout>
+
+<style>
+  .jl-article-container {
+    width: 100%;
+    max-height: 100dvh;
+    overflow-y: scroll;
+    padding-inline: var(--jl-spacing-md);
+  }
+
+  article {
+    max-width: 980px;
+    margin: 0 auto;
+    padding-block-end: var(--jl-spacing-md);
+  }
+
+  .jl-article-meta {
+    display: flex;
+    gap: var(--jl-spacing-sm);
+    justify-content: flex-end;
+    font-size: var(--jl-font-size-small);
+    color: var(--jl-color-text-secondary);
+    width: 100%;
+
+    & p > span {
+      font-weight: var(--jl-font-weight-medium);
+    }
+  }
+</style>
