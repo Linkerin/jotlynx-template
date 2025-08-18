@@ -6,6 +6,8 @@ import RightAside from '@components/RightAside.astro';
 
 type Props = MarkdownLayoutProps<{
   title?: string;
+  description?: string;
+  tags?: string[];
   created?: string;
   updated?: string;
 }>;
@@ -21,7 +23,7 @@ const updated = frontmatter?.updated
   : null;
 ---
 
-<Head title={title} />
+<Head title={title} description={frontmatter?.description} />
 
 <MainLayout>
   <div class="jl-article-container">

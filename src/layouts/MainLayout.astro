@@ -2,8 +2,6 @@
 import AsideNav from '@components/AsideNav.astro';
 import Head from '@components/Head.astro';
 
-import config from '../../jotlynx.config.json';
-
 import '@fontsource-variable/lora';
 import '@fontsource-variable/open-sans';
 import '@fontsource-variable/open-sans/wght-italic.css';
@@ -14,7 +12,7 @@ import '@/styles/components.css';
 ---
 
 <html lang="en">
-  <Head title={config.meta.title} description={config.meta.description} />
+  <Head />
 
   <body>
     <AsideNav />

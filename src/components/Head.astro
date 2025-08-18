@@ -1,10 +1,15 @@
 ---
+import config from '../../jotlynx.config.json';
+
 type Props = {
   title?: string;
   description?: string;
 };
 
-const { title = 'Jotlynx', description = '' } = Astro.props;
+const {
+  title = config.meta.title ?? 'JotLynx',
+  description = config.meta.description ?? ''
+} = Astro.props;
 ---
 
 <head>
