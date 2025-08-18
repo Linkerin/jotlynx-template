@@ -1,0 +1,70 @@
+---
+import groupHeadings from './utils/groupHeadings';
+import type { ToCProps } from './types';
+
+type Props = ToCProps;
+
+const { headings, title = 'Top' } = Astro.props;
+const filteredHeadings = headings.filter(
+  heading => heading.depth === 2 || heading.depth === 3
+);
+const headingGroups = groupHeadings(filteredHeadings);
+---
+
+<nav id="jl-toc">
+  <h2>On this page</h2>
+  <ul class="jl-toc-list">
+    <li>
+      <a class="jl-top-item" href={`#_top`}>{title}</a>
+      <ul>
+        {
+          headingGroups.map(group => (
+            <li>
+              <a href={`#${group.slug}`}>{group.text}</a>
+              {group.children.length > 0 && (
+                <ul>
+                  {group.children.map(child => (
+                    <li>
+                      <a href={`#${child.slug}`}>{child.text}</a>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </li>
+          ))
+        }
+      </ul>
+    </li>
+  </ul>
+</nav>
+
+<style>
+  h2 {
+    font-size: var(--jl-font-size-h4);
+  }
+
+  .jl-toc-list {
+    padding-inline-start: 0;
+  }
+
+  ul {
+    list-style-type: none;
+  }
+
+  .jl-top-item {
+    display: inline-block;
+    font-weight: var(--jl-font-weight-medium);
+    margin-block-end: var(--jl-spacing-xs);
+  }
+
+  a {
+    color: var(--jl-color-text-secondary);
+    font-weight: var(--jl-font-weight-text);
+    font-size: var(--jl-font-size-xs);
+    text-decoration: none;
+  }
+
+  li {
+    margin-block: 0;
+  }
+</style>

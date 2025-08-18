@@ -2,7 +2,7 @@
 import type { MarkdownLayoutProps } from 'astro';
 import MainLayout from './MainLayout.astro';
 import Head from '@components/Head.astro';
-import RightAside from '@components/RightAside.astro';
+import RightAside from '@components/RightAside/RightAside.astro';
 
 type Props = MarkdownLayoutProps<{
   title?: string;
@@ -46,12 +46,16 @@ const updated = frontmatter?.updated
       <slot />
     </article>
   </div>
-  {headings && headings.length > 0 && <RightAside headings={headings} />}
+  {
+    headings && headings.length > 0 && (
+      <RightAside headings={headings} title={title} />
+    )
+  }
 </MainLayout>
 
 <style>
   .jl-article-container {
-    width: 100%;
+    flex-grow: 1;
     max-height: 100dvh;
     overflow-y: scroll;
     padding-inline: var(--jl-spacing-md);

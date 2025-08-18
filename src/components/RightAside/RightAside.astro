@@ -1,0 +1,32 @@
+---
+import ToC from './ToC.astro';
+import type { ToCProps } from './types';
+
+type Props = ToCProps;
+
+const { headings, title } = Astro.props;
+---
+
+<aside id="jl-right-aside">
+  <ToC headings={headings} title={title} />
+</aside>
+
+<style>
+  aside {
+    border-inline-start: var(--jl-outline-w-sm) solid;
+    border-color: var(--jl-color-neutral);
+    flex-shrink: 0;
+    height: 100dvh;
+    margin-inline-start: var(--jl-spacing-md);
+    max-height: 100dvh;
+    overflow-y: scroll;
+    padding: var(--jl-spacing-sm) var(--jl-spacing-md);
+    width: min(18dvw, 260px);
+  }
+
+  @media (max-width: 968px) {
+    aside {
+      display: none;
+    }
+  }
+</style>
