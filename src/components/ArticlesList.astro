@@ -1,0 +1,41 @@
+---
+import { getCollection } from 'astro:content';
+
+const articles = await getCollection('articles');
+const links = articles.map(article => ({
+  path: article.id,
+  title: article.data.title
+}));
+---
+
+<nav>
+  <ul>
+    <li>
+      <a href="/">Home</a>
+    </li>
+    {
+      links.map(link => (
+        <li>
+          <a href={`/${link.path}`}>{link.title}</a>
+        </li>
+      ))
+    }
+  </ul>
+</nav>
+
+<style>
+  ul {
+    display: flex;
+    flex-direction: column;
+  }
+
+  li {
+    font-size: var(--jl-font-size-sm);
+  }
+
+  a,
+  a:visited {
+    font-weight: var(--jl-font-weight-text);
+    text-decoration: none;
+  }
+</style>

@@ -17,11 +17,6 @@
     --jl-color-box-shadow-1: hsl(30, 9%, 27%, 0.15);
     --jl-color-box-shadow-2: hsl(30, 9%, 27%, 0.3);
 
-    --jl-elevation-1: 0px 1px 3px 0px var(--jl-color-box-shadow-1),
-      0px 1px 2px 0px var(--jl-color-box-shadow-2);
-    --jl-elevation-2: 0px 2px 6px 2px var(--jl-color-box-shadow-1),
-      0px 1px 2px 0px var(--jl-color-box-shadow-2);
-
     --jl-hover: 8%;
     --jl-active: 12%;
 
@@ -63,14 +58,17 @@
     --jl-outline-w-md: 2px;
     --jl-outline-w-lg: 3px;
 
-    --color-text-neutral: light-dark(hsl(30, 4%, 50%), hsl(30, 4%, 65%));
-    --color-text-on-dark: light-dark(hsl(45, 30%, 94%), hsl(45, 8%, 12%));
-    --color-gray: light-dark(hsl(30, 4%, 35%), hsl(30, 4%, 35%));
-    --color-main: light-dark(hsl(29, 58%, 50%), hsl(29, 54%, 40%));
-    --color-transparent-bg: light-dark(
-      hsl(30, 4%, 70%, 0.2),
-      hsl(30, 4%, 35%, 0.2)
-    );
+    --jl-mobile-nav-height: 50px;
+
+    --jl-elevation-1: 0px 1px 3px 0px var(--jl-color-box-shadow-1),
+      0px 1px 2px 0px var(--jl-color-box-shadow-2);
+    --jl-elevation-2: 0px 2px 6px 2px var(--jl-color-box-shadow-1),
+      0px 1px 2px 0px var(--jl-color-box-shadow-2);
+
+    @media (prefers-color-scheme: dark) {
+      --jl-elevation-1: none;
+      --jl-elevation-2: none;
+    }
 
     color-scheme: light dark;
 

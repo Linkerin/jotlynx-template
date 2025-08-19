@@ -1,8 +1,5 @@
 @layer components {
-  #jl-main {
-    display: flex;
-    width: 100%;
-
+  #jl-md-article {
     & :is(ul) {
       list-style-type: disc;
     }
@@ -12,7 +9,7 @@
     }
 
     & :is(ol, ul) {
-      padding-inline-start: var(--jl-spacing-xl);
+      padding-inline-start: var(--jl-spacing-lg);
     }
   }
 

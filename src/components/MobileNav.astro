@@ -1,0 +1,105 @@
+<header>
+  <input type="checkbox" id="jl-mobile-menu-checkbox" />
+  <label for="jl-mobile-menu-checkbox" class="jl-menu-btn">
+    <span class="jl-mobile-menu-icon-container">
+      <span></span>
+      <span></span>
+    </span>
+    <span class="jl-mobile-menu-icon-container">
+      <span></span>
+      <span></span>
+    </span>
+    <span class="jl-mobile-menu-icon-container">
+      <span></span>
+      <span></span>
+    </span>
+  </label>
+
+  <section>
+    <slot />
+  </section>
+  <div class="jl-mobile-menu-container"></div>
+</header>
+
+<style>
+  header {
+    position: sticky;
+    top: 0;
+    background-color: var(--jl-color-bg);
+    border-block-end: var(--jl-outline-w-sm) solid var(--jl-color-neutral);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    height: var(--jl-mobile-nav-height);
+    min-height: var(--jl-mobile-nav-height);
+    width: 100%;
+  }
+
+  @media (min-width: 768px) {
+    header {
+      display: none;
+    }
+  }
+
+  #jl-mobile-menu-checkbox {
+    display: none;
+  }
+
+  .jl-menu-btn {
+    background: none;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: space-evenly;
+    aspect-ratio: 1 / 1;
+    border: none;
+    border-radius: var(--jl-br-xs);
+    padding-block: var(--jl-spacing-sm);
+    padding-inline: calc(var(--jl-spacing-sm) + 2px);
+    width: 44px;
+    margin-inline-start: auto;
+    z-index: 11;
+  }
+
+  .jl-mobile-menu-icon-container {
+    display: flex;
+    align-items: center;
+    justify-content: stretch;
+    gap: var(--jl-spacing-xxs);
+    /* padding-inline: var(--jl-spacing-xxs); */
+
+    & > span {
+      display: inline-block;
+      background-color: var(--jl-color-text);
+      border-radius: var(--jl-br-sm);
+      height: 2px;
+      width: 100%;
+    }
+
+    & > span:first-of-type {
+      width: 2px;
+    }
+  }
+
+  section {
+    position: fixed;
+    top: var(--jl-mobile-nav-height);
+    left: -100dvw;
+    background-color: var(--jl-color-bg-darker);
+    border-radius: var(--jl-br-sm);
+    box-shadow: var(--jl-elevation-2);
+    margin: var(--jl-spacing-md);
+    height: calc(
+      100dvh - var(--jl-mobile-nav-height) - var(--jl-spacing-md) * 2
+    );
+    padding: var(--jl-spacing-lg) var(--jl-spacing-xl);
+    transition: 0.4s left ease;
+    width: calc(100dvw - var(--jl-spacing-md) * 2);
+    z-index: 10;
+  }
+
+  input:checked ~ section {
+    left: 0;
+  }
+</style>

@@ -1,6 +1,7 @@
 ---
-import AsideNav from '@components/AsideNav.astro';
 import Head from '@components/Head.astro';
+import LeftAside from '@components/LeftAside.astro';
+import MobileNav from '@components/MobileNav.astro';
 
 import '@fontsource-variable/lora';
 import '@fontsource-variable/open-sans';
@@ -9,13 +10,20 @@ import '@fontsource-variable/open-sans/wght-italic.css';
 import '@/styles/reset.css';
 import '@/styles/base.css';
 import '@/styles/components.css';
+import ArticlesList from '@components/ArticlesList.astro';
 ---
 
 <html lang="en">
   <Head />
 
   <body>
-    <AsideNav />
+    <LeftAside>
+      <ArticlesList />
+    </LeftAside>
+    <MobileNav>
+      <ArticlesList />
+    </MobileNav>
+
     <main id="jl-main">
       <slot />
     </main>
@@ -27,6 +35,31 @@ import '@/styles/components.css';
 
   body {
     display: grid;
-    grid-template-columns: min(18dvw, 240px) 1fr;
+    grid-template-columns: auto minmax(0, 1fr);
+
+    /* blocks scrolling when mobile nav is open */
+    &:has(#jl-mobile-menu-checkbox:checked) {
+      height: 100dvh;
+      overflow: hidden;
+    }
   }
+
+  #jl-main {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+
+  @media (max-width: 767px) {
+    body {
+      display: flex;
+      flex-direction: column;
+    }
+  }
+
+  /* @media (max-width: 767px) {
+    #jl-main {
+      display: flex;
+      flex-direction: column-reverse;
+    }
+  } */
 </style>
