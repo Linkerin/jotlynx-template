@@ -1,43 +1,44 @@
 ---
-import CloseHtmlIcon from './icons/CloseHtmlIcon.astro';
-import MenuHtmlIcon from './icons/MenuHtmlIcon.astro';
+import CloseIcon from '@assets/icons/close.svg';
+import MenuIcon from '@assets/icons/menu.svg';
 ---
 
-<header>
-  <input type="checkbox" id="jl-mobile-menu-checkbox" />
+<div class="jl-mobile-menu-container">
+  <input aria-label="Open menu" type="checkbox" id="jl-mobile-menu-checkbox" />
   <label for="jl-mobile-menu-checkbox" class="jl-menu-btn">
     <div class="jl-menu-icon-wrapper">
-      <MenuHtmlIcon />
+      <MenuIcon />
     </div>
     <div class="jl-close-icon-wrapper">
-      <CloseHtmlIcon class="test" />
+      <CloseIcon />
     </div>
   </label>
 
-  <section>
+  <section id="jl-mobile-menu-dialog">
     <slot />
   </section>
-  <div class="jl-mobile-menu-container"></div>
-</header>
+</div>
+
+<script>
+  const container = document.querySelector('.jl-mobile-menu-container');
+  const menuCheckbox = document.querySelector(
+    '#jl-mobile-menu-checkbox'
+  ) as HTMLInputElement | null;
+
+  const handleOutClick = (e: Event) => {
+    if (container?.contains(e.target as Node)) return;
+
+    if (menuCheckbox) {
+      menuCheckbox.checked = false;
+    }
+  };
+
+  document.addEventListener('click', handleOutClick);
+</script>
 
 <style>
-  header {
-    position: sticky;
-    top: 0;
-    background-color: var(--jl-color-bg);
-    border-block-end: var(--jl-outline-w-sm) solid var(--jl-color-neutral);
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    height: var(--jl-mobile-nav-height);
-    min-height: var(--jl-mobile-nav-height);
-    width: 100%;
-    z-index: 5;
-  }
-
   @media (min-width: 768px) {
-    header {
+    .jl-mobile-menu-container {
       display: none;
     }
   }
@@ -54,13 +55,11 @@ import MenuHtmlIcon from './icons/MenuHtmlIcon.astro';
     justify-content: center;
     aspect-ratio: 1 / 1;
     border: none;
-    border-radius: var(--jl-br-sm);
+    border-radius: var(--jl-br-full);
     color: var(--jl-color-text);
     cursor: pointer;
-    font-size: 1.75rem;
-    margin-inline-start: auto;
-    margin-inline-end: var(--jl-spacing-sm);
-    width: 44px;
+    font-size: 1.375rem;
+    width: var(--jl-size-btn-md);
 
     &:hover {
       background-color: var(--jl-color-bg-darker);

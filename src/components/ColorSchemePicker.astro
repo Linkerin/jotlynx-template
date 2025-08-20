@@ -1,0 +1,207 @@
+---
+import LaptopSvgIcon from '@assets/icons/laptop.svg';
+import MoonSvgIcon from '@assets/icons/moon.svg';
+import SunSvgIcon from '@assets/icons/sun.svg';
+---
+
+<script>
+  type ColorScheme = 'light' | 'system' | 'dark';
+
+  const LOCAL_STORAGE_KEY = 'jl-color-scheme';
+  const HTML_DATA_ATTR = 'jlColorScheme';
+
+  const html = document.querySelector('html');
+  const inputs = document.querySelectorAll(
+    'input[name="color-scheme"]'
+  ) as NodeListOf<HTMLInputElement>;
+  const pickerCheckbox = document.querySelector(
+    '#jl-color-scheme-checkbox'
+  ) as HTMLInputElement | null;
+  const container = document.querySelector(
+    '#jl-color-scheme-picker'
+  ) as HTMLDivElement | null;
+
+  const handleHtmlProp = (scheme: ColorScheme) => {
+    if (!html) return;
+    const htmlPropValue: Exclude<ColorScheme, 'system'> | null =
+      scheme === 'system' ? null : scheme === 'dark' ? 'dark' : 'light';
+    if (!htmlPropValue) {
+      html.dataset[HTML_DATA_ATTR] = 'system';
+    } else {
+      html.dataset[HTML_DATA_ATTR] = htmlPropValue;
+    }
+  };
+
+  const handleChange = (e: Event) => {
+    const elem = e.target as HTMLInputElement;
+    colorScheme = elem.value as ColorScheme;
+    handleHtmlProp(colorScheme);
+
+    localStorage.setItem(LOCAL_STORAGE_KEY, colorScheme);
+    if (pickerCheckbox) {
+      pickerCheckbox.checked = false;
+    }
+  };
+
+  const handleOutClick = (e: Event) => {
+    if (container?.contains(e.target as Node)) return;
+    if (pickerCheckbox) {
+      pickerCheckbox.checked = false;
+    }
+  };
+
+  document.addEventListener('click', handleOutClick);
+
+  const savedColorScheme = localStorage.getItem(
+    LOCAL_STORAGE_KEY
+  ) as ColorScheme | null;
+  let colorScheme: ColorScheme = savedColorScheme || 'system';
+  handleHtmlProp(colorScheme);
+
+  inputs.forEach(input => {
+    input.checked = input.value === colorScheme;
+  });
+  inputs.forEach(input => input.addEventListener('change', handleChange));
+</script>
+
+<div id="jl-color-scheme-picker" class="jl-color-scheme-picker">
+  <input
+    id="jl-color-scheme-checkbox"
+    aria-role="Opens color scheme selection list"
+    type="checkbox"
+  />
+  <label for="jl-color-scheme-checkbox" class="jl-color-scheme-btn">
+    <span id="jl-color-scheme-icon-light"><SunSvgIcon /></span>
+    <span id="jl-color-scheme-icon-system"><LaptopSvgIcon /></span>
+    <span id="jl-color-scheme-icon-dark"><MoonSvgIcon /></span>
+  </label>
+
+  <div class="jl-color-scheme-list-container">
+    <ul>
+      <li>
+        <label>
+          <input type="radio" name="color-scheme" value="light" />
+          <span><SunSvgIcon /></span>
+          Light
+        </label>
+      </li>
+      <li>
+        <label>
+          <input type="radio" name="color-scheme" value="system" />
+          <span><LaptopSvgIcon /></span>
+          System
+        </label>
+      </li>
+      <li>
+        <label>
+          <input type="radio" name="color-scheme" value="dark" />
+          <span><MoonSvgIcon /></span>
+          Dark
+        </label>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<style>
+  .jl-color-scheme-picker {
+    position: relative;
+  }
+
+  #jl-color-scheme-checkbox {
+    display: none;
+  }
+
+  .jl-color-scheme-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    aspect-ratio: 1 / 1;
+    border-radius: var(--jl-br-full);
+    cursor: pointer;
+    height: var(--jl-size-btn-md);
+    font-size: var(--jl-size-icon);
+    width: auto;
+
+    &:hover {
+      background-color: var(--jl-color-bg-darker);
+      color: var(--jl-color-accent);
+    }
+
+    &:active {
+      background-color: var(--jl-color-bg-dark);
+    }
+
+    & span {
+      display: none;
+    }
+  }
+
+  .jl-color-scheme-list-container {
+    display: none;
+
+    position: absolute;
+    top: calc(100% + var(--jl-spacing-sm));
+    right: 0;
+    background-color: var(--jl-color-bg);
+    border-radius: var(--jl-br-sm);
+    box-shadow: var(--jl-elevation-2);
+    padding: var(--jl-spacing-xxs);
+    min-width: 150px;
+
+    & ul {
+      display: flex;
+      flex-direction: column;
+      gap: var(--jl-spacing-xxs);
+    }
+
+    & li {
+      margin-block: 0;
+    }
+
+    & input {
+      display: none;
+    }
+
+    & label {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: var(--jl-spacing-xs);
+      background: none;
+      border: none;
+      border-radius: calc(var(--jl-br-sm) - var(--jl-spacing-xxs));
+      cursor: pointer;
+      font-size: 100%;
+      padding-block: var(--jl-spacing-xs);
+      padding-inline: var(--jl-spacing-md);
+      width: 100%;
+
+      &:hover {
+        background-color: var(--jl-color-bg-darker);
+      }
+
+      &:active {
+        background-color: var(--jl-color-bg-dark);
+      }
+
+      &:has(input[type='radio']:checked) {
+        background-color: var(--jl-color-bg-darker);
+      }
+    }
+  }
+
+  input[type='checkbox']:checked ~ .jl-color-scheme-list-container {
+    display: block;
+  }
+
+  html[data-jl-color-scheme='light'] span#jl-color-scheme-icon-light {
+    display: block;
+  }
+  html[data-jl-color-scheme='dark'] span#jl-color-scheme-icon-dark {
+    display: block;
+  }
+  html[data-jl-color-scheme='system'] span#jl-color-scheme-icon-system {
+    display: block;
+  }
+</style>

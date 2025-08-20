@@ -14,11 +14,11 @@ const { headings, title } = Astro.props;
 <style>
   aside {
     position: sticky;
-    top: 0;
+    top: var(--jl-header-height);
     border-inline-start: var(--jl-outline-w-sm) solid;
     border-color: var(--jl-color-neutral);
     flex-shrink: 0;
-    height: 100dvh;
+    height: calc(100dvh - var(--jl-header-height));
     max-height: 100dvh;
     overflow-y: scroll;
     padding: var(--jl-spacing-sm) var(--jl-spacing-md);

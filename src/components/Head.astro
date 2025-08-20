@@ -1,5 +1,5 @@
 ---
-import config from '../../jotlynx.config.json';
+import configJson from '../../jotlynx.config.json';
 
 type Props = {
   title?: string;
@@ -7,8 +7,8 @@ type Props = {
 };
 
 const {
-  title = config.meta.title ?? 'JotLynx',
-  description = config.meta.description ?? ''
+  title = configJson.meta.title ?? 'JotLynx',
+  description = configJson.meta.description ?? ''
 } = Astro.props;
 ---
 

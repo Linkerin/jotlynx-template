@@ -1,0 +1,118 @@
+---
+import config from '@/config';
+import ColorSchemePicker from './ColorSchemePicker.astro';
+import SearchIcon from '@assets/icons/search.svg';
+import Nav from './Nav.astro';
+import MobileMenu from './MobileMenu.astro';
+---
+
+<header>
+  <a id="jl-skip-to-content" href="#jl-main">Skip to content</a>
+  <div class="jl-header-container">
+    <div class="jl-header-logo-nav-container">
+      <a id="jl-logo" href="/">JotLynx</a>
+
+      <div class="jl-header-desktop-nav-container">
+        <Nav />
+      </div>
+    </div>
+
+    <div class="jl-header-icons-container">
+      <a id="jl-header-search-link" href="/search" aria-label="To search page">
+        <SearchIcon />
+      </a>
+      <ColorSchemePicker />
+
+      <MobileMenu>
+        <Nav />
+      </MobileMenu>
+    </div>
+  </div>
+</header>
+
+<style>
+  header {
+    position: sticky;
+    top: 0;
+    background-color: var(--jl-color-bg);
+    background-color: color-mix(
+      in srgb,
+      var(--jl-color-bg) 65%,
+      rgba(255, 255, 255, 0)
+    );
+    backdrop-filter: blur(10px);
+    border-block-end: var(--jl-outline-w-sm) solid var(--jl-color-neutral);
+    padding-inline: var(--jl-spacing-xxl);
+    width: 100dvw;
+
+    z-index: 5;
+  }
+
+  #jl-skip-to-content {
+    position: absolute;
+    top: var(--jl-spacing-lg);
+    left: var(--jl-spacing-lg);
+    color: var(--jl-color-accent);
+    height: 0px;
+    overflow: hidden;
+    text-align: center;
+    text-decoration: none;
+    width: 0px;
+    z-index: 10;
+
+    &:focus {
+      height: auto;
+      width: auto;
+      padding: var(--jl-spacing-md) var(--jl-spacing-lg);
+    }
+  }
+
+  .jl-header-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    height: var(--jl-header-height);
+    max-width: 1280px;
+    margin-inline: auto;
+  }
+
+  .jl-header-logo-nav-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: var(--jl-spacing-xxl);
+  }
+
+  #jl-logo {
+    color: var(--jl-color-accent);
+    font-weight: var(--jl-font-weight-bold);
+    font-size: 140%;
+    margin-inline-end: 60px;
+    text-decoration: none;
+  }
+
+  @media (max-width: 767px) {
+    .jl-header-desktop-nav-container {
+      display: none;
+    }
+  }
+
+  .jl-header-icons-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: var(--jl-spacing-xs);
+    height: 100%;
+  }
+
+  #jl-header-search-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    aspect-ratio: 1 / 1;
+    font-size: 1.25rem; /* Can't use --jl-size-icon here as search icon looks bigger */
+    height: var(--jl-size-btn-md);
+    width: auto;
+  }
+</style>

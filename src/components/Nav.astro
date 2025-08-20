@@ -1,0 +1,62 @@
+---
+import config from '@/config';
+
+const { pathname } = Astro.url;
+
+let currPath: string =
+  pathname.endsWith('/') && pathname !== '/' ? pathname.slice(0, -1) : pathname;
+currPath = currPath.split('/').at(-1)!;
+
+const isCurrent = (path: string): boolean => {
+  const normalizedPath = path.replace('/', '');
+  return normalizedPath === currPath;
+};
+---
+
+<nav>
+  <ul class="jl-nav-list">
+    <li>
+      <a
+        href="/articles"
+        class:list={{ 'jl-nav-current': isCurrent('/articles') }}>Articles</a
+      >
+    </li>
+    <li>
+      <a href="/tags" class:list={{ 'jl-nav-current': isCurrent('/tags') }}
+        >Tags</a
+      >
+    </li>
+    {
+      config.hasAbout && (
+        <li>
+          <a
+            href="/about"
+            class:list={{ 'jl-nav-current': isCurrent('/about') }}
+          >
+            About
+          </a>
+        </li>
+      )
+    }
+  </ul>
+</nav>
+
+<style>
+  .jl-nav-list {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+    gap: var(--jl-spacing-xxl);
+  }
+
+  a {
+    text-decoration: none;
+  }
+
+  a:hover,
+  .jl-nav-current {
+    text-decoration: var(--jl-outline-w-md) var(--jl-color-accent) underline
+      dashed;
+  }
+</style>

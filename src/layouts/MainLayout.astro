@@ -1,8 +1,7 @@
 ---
-import ArticlesList from '@components/ArticlesList.astro';
 import Head from '@components/Head.astro';
-import LeftAside from '@components/LeftAside.astro';
-import MobileNav from '@components/MobileNav.astro';
+import Header from '@/components/Header.astro';
+import config from '@/config';
 
 import '@fontsource-variable/lora';
 import '@fontsource-variable/open-sans';
@@ -13,16 +12,11 @@ import '@/styles/base.css';
 import '@/styles/components.css';
 ---
 
-<html lang="en">
+<html lang={config.htmlLang || 'en'}>
   <Head />
 
   <body>
-    <LeftAside>
-      <ArticlesList />
-    </LeftAside>
-    <MobileNav>
-      <ArticlesList />
-    </MobileNav>
+    <Header />
 
     <main id="jl-main">
       <slot />
@@ -30,35 +24,9 @@ import '@/styles/components.css';
   </body>
 </html>
 
-<style is:global>
-  @layer reset, base, components;
-
-  body {
-    display: grid;
-    grid-template-columns: auto minmax(0, 1fr);
-
-    /* blocks scrolling when mobile nav is open */
-    &:has(#jl-mobile-menu-checkbox:checked) {
-      overflow: hidden;
-    }
-  }
-
+<style>
   #jl-main {
     display: grid;
     grid-template-columns: minmax(0, 1fr) auto;
   }
-
-  @media (max-width: 767px) {
-    body {
-      display: flex;
-      flex-direction: column;
-    }
-  }
-
-  /* @media (max-width: 767px) {
-    #jl-main {
-      display: flex;
-      flex-direction: column-reverse;
-    }
-  } */
 </style>
