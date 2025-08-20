@@ -1,4 +1,5 @@
 ---
+import ArticlesList from '@components/ArticlesList.astro';
 import Head from '@components/Head.astro';
 import LeftAside from '@components/LeftAside.astro';
 import MobileNav from '@components/MobileNav.astro';
@@ -10,7 +11,6 @@ import '@fontsource-variable/open-sans/wght-italic.css';
 import '@/styles/reset.css';
 import '@/styles/base.css';
 import '@/styles/components.css';
-import ArticlesList from '@components/ArticlesList.astro';
 ---
 
 <html lang="en">
@@ -39,7 +39,6 @@ import ArticlesList from '@components/ArticlesList.astro';
 
     /* blocks scrolling when mobile nav is open */
     &:has(#jl-mobile-menu-checkbox:checked) {
-      height: 100dvh;
       overflow: hidden;
     }
   }
@@ -47,7 +46,6 @@ import ArticlesList from '@components/ArticlesList.astro';
   #jl-main {
     display: grid;
     grid-template-columns: minmax(0, 1fr) auto;
-    /* z-index: 0; */
   }
 
   @media (max-width: 767px) {

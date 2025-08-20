@@ -1,18 +1,17 @@
+---
+import CloseHtmlIcon from './icons/CloseHtmlIcon.astro';
+import MenuHtmlIcon from './icons/MenuHtmlIcon.astro';
+---
+
 <header>
   <input type="checkbox" id="jl-mobile-menu-checkbox" />
   <label for="jl-mobile-menu-checkbox" class="jl-menu-btn">
-    <span class="jl-mobile-menu-icon-container">
-      <span></span>
-      <span></span>
-    </span>
-    <span class="jl-mobile-menu-icon-container">
-      <span></span>
-      <span></span>
-    </span>
-    <span class="jl-mobile-menu-icon-container">
-      <span></span>
-      <span></span>
-    </span>
+    <div class="jl-menu-icon-wrapper">
+      <MenuHtmlIcon />
+    </div>
+    <div class="jl-close-icon-wrapper">
+      <CloseHtmlIcon class="test" />
+    </div>
   </label>
 
   <section>
@@ -51,35 +50,24 @@
     background: none;
     display: flex;
     flex-direction: column;
-    align-items: stretch;
-    justify-content: space-evenly;
+    align-items: center;
+    justify-content: center;
     aspect-ratio: 1 / 1;
     border: none;
-    border-radius: var(--jl-br-xs);
-    padding-block: var(--jl-spacing-sm);
-    padding-inline: calc(var(--jl-spacing-sm) + 2px);
-    width: 44px;
+    border-radius: var(--jl-br-sm);
+    color: var(--jl-color-text);
+    cursor: pointer;
+    font-size: 1.75rem;
     margin-inline-start: auto;
-    z-index: 11;
-  }
+    margin-inline-end: var(--jl-spacing-sm);
+    width: 44px;
 
-  .jl-mobile-menu-icon-container {
-    display: flex;
-    align-items: center;
-    justify-content: stretch;
-    gap: var(--jl-spacing-xxs);
-    /* padding-inline: var(--jl-spacing-xxs); */
-
-    & > span {
-      display: inline-block;
-      background-color: var(--jl-color-text);
-      border-radius: var(--jl-br-sm);
-      height: 2px;
-      width: 100%;
+    &:hover {
+      background-color: var(--jl-color-bg-darker);
     }
 
-    & > span:first-of-type {
-      width: 2px;
+    &:active {
+      background-color: var(--jl-color-bg-dark);
     }
   }
 
@@ -100,7 +88,21 @@
     z-index: 10;
   }
 
-  input:checked ~ section {
-    left: 0;
+  .jl-close-icon-wrapper {
+    display: none;
+  }
+
+  input:checked {
+    & ~ section {
+      left: 0;
+    }
+
+    & ~ label .jl-close-icon-wrapper {
+      display: block;
+    }
+
+    & ~ label .jl-menu-icon-wrapper {
+      display: none;
+    }
   }
 </style>
