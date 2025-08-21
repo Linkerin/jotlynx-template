@@ -68,9 +68,16 @@ const updated = frontmatter?.updated
     display: flex;
     gap: var(--jl-spacing-sm);
     justify-content: flex-end;
+    flex-wrap: wrap;
     font-size: var(--jl-font-size-small);
     color: var(--jl-color-text-secondary);
-    width: 100%;
+    margin-block-end: var(--jl-spacing-md);
+    margin-inline-start: auto;
+    width: 50%;
+
+    & p {
+      margin-block-end: 0px;
+    }
 
     & p > span {
       font-weight: var(--jl-font-weight-medium);

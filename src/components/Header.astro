@@ -38,9 +38,9 @@ import MobileMenu from './MobileMenu.astro';
     background-color: color-mix(
       in srgb,
       var(--jl-color-bg) 65%,
-      rgba(255, 255, 255, 0)
+      var(--jl-color-transparent)
     );
-    backdrop-filter: blur(10px);
+    backdrop-filter: blur(var(--jl-backdrop-blur));
     border-block-end: var(--jl-outline-w-sm) solid var(--jl-color-neutral);
     padding-inline: var(--jl-spacing-xxl);
     width: 100dvw;
@@ -93,6 +93,10 @@ import MobileMenu from './MobileMenu.astro';
   }
 
   @media (max-width: 767px) {
+    header {
+      padding-inline: var(--jl-spacing-lg);
+    }
+
     .jl-header-desktop-nav-container {
       display: none;
     }

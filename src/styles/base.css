@@ -13,6 +13,7 @@
     );
     --jl-color-accent: light-dark(hsl(225, 60%, 45%), hsl(225, 85%, 58%));
     --jl-color-neutral: light-dark(hsl(215, 5%, 80%), hsl(215, 5%, 60%));
+    --jl-color-transparent: rgba(255, 255, 255, 0);
 
     --jl-color-box-shadow-1: hsl(30, 9%, 27%, 0.15);
     --jl-color-box-shadow-2: hsl(30, 9%, 27%, 0.3);
@@ -68,6 +69,8 @@
       0px 1px 2px 0px var(--jl-color-box-shadow-2);
     --jl-elevation-2: 0px 2px 6px 2px var(--jl-color-box-shadow-1),
       0px 1px 2px 0px var(--jl-color-box-shadow-2);
+
+    --jl-backdrop-blur: 10px;
 
     color-scheme: light dark;
 
@@ -143,6 +146,8 @@
     color: inherit;
     text-decoration: underline;
     text-decoration-color: var(--jl-color-accent);
+    text-decoration-style: dashed;
+    text-decoration-thickness: var(--jl-outline-w-md);
   }
 
   a:hover,
@@ -154,6 +159,7 @@
   a,
   p {
     text-underline-position: under;
+    text-underline-offset: 0.25rem;
   }
 
   a > svg,
