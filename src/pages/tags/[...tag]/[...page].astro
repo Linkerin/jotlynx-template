@@ -14,8 +14,6 @@ export const getStaticPaths = async ({ paginate }: GetStaticPathsOptions) => {
   const articles = await getCollection('articles');
   const tags = getTags(articles);
 
-  console.log(tags);
-
   return tags.flatMap(tag => {
     const tagArticles = getSortedArticles(articles, article => {
       if (!article.data.tags) return false;

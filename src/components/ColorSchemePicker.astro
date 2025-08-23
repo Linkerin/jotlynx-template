@@ -4,6 +4,61 @@ import MoonSvgIcon from '@assets/icons/moon.svg';
 import SunSvgIcon from '@assets/icons/sun.svg';
 ---
 
+<script>
+  import {
+    getColorScheme,
+    HTML_DATA_ATTR,
+    setColorScheme,
+    type ColorScheme
+  } from '@/utils/colorScheme';
+
+  function init() {
+    const html = document.documentElement;
+    const inputs = document.querySelectorAll(
+      'input[name="color-scheme"]'
+    ) as NodeListOf<HTMLInputElement>;
+    const pickerCheckbox = document.querySelector(
+      '#jl-color-scheme-checkbox'
+    ) as HTMLInputElement | null;
+    const container = document.querySelector(
+      '#jl-color-scheme-picker'
+    ) as HTMLDivElement | null;
+
+    let colorScheme: ColorScheme =
+      (html?.dataset[HTML_DATA_ATTR] as ColorScheme | undefined) ??
+      getColorScheme();
+
+    const handleChange = (e: Event) => {
+      const elem = e.target as HTMLInputElement;
+      colorScheme = elem.value as ColorScheme;
+      setColorScheme(colorScheme);
+
+      if (pickerCheckbox) {
+        pickerCheckbox.checked = false;
+      }
+    };
+
+    const handleOutClick = (e: Event) => {
+      if (container?.contains(e.target as Node)) return;
+      if (pickerCheckbox) {
+        pickerCheckbox.checked = false;
+      }
+    };
+
+    document.addEventListener('click', handleOutClick);
+
+    inputs.forEach(input => {
+      input.checked = input.value === colorScheme;
+    });
+    inputs.forEach(input => input.addEventListener('change', handleChange));
+  }
+
+  init();
+
+  // Re-run after navigation finishes
+  document.addEventListener('astro:page-load', init);
+</script>
+
 <div id="jl-color-scheme-picker" class="jl-color-scheme-picker">
   <input
     id="jl-color-scheme-checkbox"
@@ -42,54 +97,6 @@ import SunSvgIcon from '@assets/icons/sun.svg';
     </ul>
   </div>
 </div>
-
-<script>
-  import {
-    getColorScheme,
-    HTML_DATA_ATTR,
-    setColorScheme,
-    type ColorScheme
-  } from '@/utils/colorScheme';
-
-  const html = document.documentElement;
-  const inputs = document.querySelectorAll(
-    'input[name="color-scheme"]'
-  ) as NodeListOf<HTMLInputElement>;
-  const pickerCheckbox = document.querySelector(
-    '#jl-color-scheme-checkbox'
-  ) as HTMLInputElement | null;
-  const container = document.querySelector(
-    '#jl-color-scheme-picker'
-  ) as HTMLDivElement | null;
-
-  let colorScheme: ColorScheme =
-    (html?.dataset[HTML_DATA_ATTR] as ColorScheme | undefined) ??
-    getColorScheme();
-
-  const handleChange = (e: Event) => {
-    const elem = e.target as HTMLInputElement;
-    colorScheme = elem.value as ColorScheme;
-    setColorScheme(colorScheme);
-
-    if (pickerCheckbox) {
-      pickerCheckbox.checked = false;
-    }
-  };
-
-  const handleOutClick = (e: Event) => {
-    if (container?.contains(e.target as Node)) return;
-    if (pickerCheckbox) {
-      pickerCheckbox.checked = false;
-    }
-  };
-
-  document.addEventListener('click', handleOutClick);
-
-  inputs.forEach(input => {
-    input.checked = input.value === colorScheme;
-  });
-  inputs.forEach(input => input.addEventListener('change', handleChange));
-</script>
 
 <style>
   .jl-color-scheme-picker {

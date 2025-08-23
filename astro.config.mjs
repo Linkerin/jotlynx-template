@@ -11,8 +11,9 @@ export default defineConfig({
     shikiConfig: {
       themes: {
         light: 'github-light',
-        dark: 'material-theme-darker'
-      }
+        dark: 'github-dark-dimmed'
+      },
+      defaultColor: 'light-dark()'
     }
   },
   integrations: [mdx(), sitemap()],
