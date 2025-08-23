@@ -6,10 +6,6 @@ function getSortedArticles(
   articles: CollectionEntry<'articles'>[],
   filter?: (article: CollectionEntry<'articles'>) => boolean
 ): CollectionEntry<'articles'>[] {
-  articles.forEach(article => {
-    console.log(article.id, article.id in SPECIAL_PAGES);
-  });
-
   return articles
     .filter(article => {
       if (Object.values(SPECIAL_PAGES).includes(article.id as any))

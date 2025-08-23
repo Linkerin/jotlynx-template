@@ -51,7 +51,7 @@ import SunSvgIcon from '@assets/icons/sun.svg';
     type ColorScheme
   } from '@/utils/colorScheme';
 
-  const html = document.querySelector('html');
+  const html = document.documentElement;
   const inputs = document.querySelectorAll(
     'input[name="color-scheme"]'
   ) as NodeListOf<HTMLInputElement>;
@@ -69,7 +69,7 @@ import SunSvgIcon from '@assets/icons/sun.svg';
   const handleChange = (e: Event) => {
     const elem = e.target as HTMLInputElement;
     colorScheme = elem.value as ColorScheme;
-    setColorScheme(html, colorScheme);
+    setColorScheme(colorScheme);
 
     if (pickerCheckbox) {
       pickerCheckbox.checked = false;

@@ -42,11 +42,9 @@ const { title, description } = Astro.props;
 <script>
   import { getColorScheme, handleHtmlProp } from '@/utils/colorScheme';
 
-  const colorScheme = getColorScheme();
-  const html = document.querySelector('html');
-  handleHtmlProp(html, colorScheme);
+  handleHtmlProp(getColorScheme());
 
   document.addEventListener('astro:before-swap', e => {
-    handleHtmlProp(e.newDocument.documentElement, getColorScheme());
+    handleHtmlProp(getColorScheme(), e.newDocument.documentElement);
   });
 </script>
