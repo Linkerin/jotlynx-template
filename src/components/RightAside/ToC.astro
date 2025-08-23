@@ -61,7 +61,26 @@ const headingGroups = groupHeadings(filteredHeadings);
     color: var(--jl-color-text-secondary);
     font-weight: var(--jl-font-weight-text);
     font-size: var(--jl-font-size-xs);
+    line-height: 1.875em;
     text-decoration: none;
+
+    &:hover {
+      color: color-mix(
+        in srgb,
+        var(--jl-color-text-secondary),
+        var(--jl-color-black) var(--jl-hover)
+      );
+      text-decoration: var(--jl-outline-w-md) underline dashed
+        var(--jl-color-accent);
+    }
+
+    &:active {
+      color: color-mix(
+        in srgb,
+        var(--jl-color-text-secondary),
+        var(--jl-color-black) var(--jl-active)
+      );
+    }
   }
 
   li {

@@ -1,0 +1,47 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+interface Propse extends HTMLAttributes<'a'> {
+  disabled?: boolean;
+}
+
+const { disabled, href, ...props } = Astro.props;
+---
+
+<a class:list={{ disabled }} href={disabled ? undefined : href} {...props}>
+  <slot />
+</a>
+
+<style>
+  a {
+    --jl-btn-link-text-color: var(--jl-color-text);
+    --jl-btn-link-height: var(--jl-size-btn-md);
+    --jl-btn-link-border-radius: var(--jl-br-full);
+    --jl-btn-link-font-size: 100%;
+    --jl-btn-pd-inline: var(--jl-spacing-sm);
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--jl-spacing-xxs);
+    border-radius: var(--jl-btn-link-border-radius);
+    color: var(--jl-btn-link-text-color);
+    cursor: pointer;
+    font-size: var(--jl-btn-link-font-size);
+    height: var(--jl-btn-link-height);
+    padding-inline: var(--jl-btn-pd-inline);
+    text-decoration: none;
+
+    &:hover:not(.disabled) {
+      background-color: var(--jl-color-bg-darker);
+    }
+
+    &:active:not(.disabled) {
+      background-color: var(--jl-color-bg-dark);
+    }
+  }
+
+  .disabled {
+    cursor: not-allowed;
+    opacity: var(--jl-disabled);
+  }
+</style>

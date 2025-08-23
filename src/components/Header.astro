@@ -1,16 +1,30 @@
 ---
-import config from '@/config';
 import ColorSchemePicker from './ColorSchemePicker.astro';
 import SearchIcon from '@assets/icons/search.svg';
 import Nav from './Nav.astro';
 import MobileMenu from './MobileMenu.astro';
+import config from '@/website.config.json';
+
+const logoText =
+  !config.logo.image && !config.logo.text ? 'JotLynx' : config.logo.text;
 ---
 
 <header>
   <a id="jl-skip-to-content" href="#jl-main">Skip to content</a>
   <div class="jl-header-container">
     <div class="jl-header-logo-nav-container">
-      <a id="jl-logo" href="/">JotLynx</a>
+      <a id="jl-logo" href="/">
+        {
+          config.logo.image && (
+            <img
+              aria-label="presentation"
+              src={config.logo.image}
+              alt={`Logo image${logoText ? `of ${logoText}` : ''}`}
+            />
+          )
+        }
+        {logoText && <span>{logoText}</span>}
+      </a>
 
       <div class="jl-header-desktop-nav-container">
         <Nav />
@@ -18,7 +32,7 @@ import MobileMenu from './MobileMenu.astro';
     </div>
 
     <div class="jl-header-icons-container">
-      <a id="jl-header-search-link" href="/search" aria-label="To search page">
+      <a id="jl-header-search-link" href="#search" aria-label="To search page">
         <SearchIcon />
       </a>
       <ColorSchemePicker />
@@ -37,14 +51,14 @@ import MobileMenu from './MobileMenu.astro';
     background-color: var(--jl-color-bg);
     background-color: color-mix(
       in srgb,
-      var(--jl-color-bg) 65%,
+      var(--jl-color-bg) var(--jl-color-mix-main, 65%),
       var(--jl-color-transparent)
     );
     backdrop-filter: blur(var(--jl-backdrop-blur));
     border-block-end: var(--jl-outline-w-sm) solid var(--jl-color-neutral);
+    height: var(--jl-header-height);
     padding-inline: var(--jl-spacing-xxl);
     width: 100dvw;
-
     z-index: 5;
   }
 
@@ -72,7 +86,7 @@ import MobileMenu from './MobileMenu.astro';
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    height: var(--jl-header-height);
+    height: 100%;
     max-width: 1280px;
     margin-inline: auto;
   }
@@ -85,11 +99,20 @@ import MobileMenu from './MobileMenu.astro';
   }
 
   #jl-logo {
+    display: inline-flex;
+    flex-direction: row;
+    align-items: center;
     color: var(--jl-color-accent);
     font-weight: var(--jl-font-weight-bold);
     font-size: 140%;
     margin-inline-end: 60px;
     text-decoration: none;
+
+    & img {
+      height: 100%;
+      max-height: calc(var(--jl-header-height) - var(--jl-spacing-sm));
+      width: auto;
+    }
   }
 
   @media (max-width: 767px) {

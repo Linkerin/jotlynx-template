@@ -1,0 +1,40 @@
+---
+import ContainerLayout from '@/layouts/ContainerLayout.astro';
+import MainLayout from '@/layouts/MainLayout.astro';
+import getTags from '@/utils/getTags';
+import { getCollection } from 'astro:content';
+
+const articles = await getCollection('articles');
+const tags = getTags(articles);
+---
+
+<MainLayout>
+  <ContainerLayout>
+    <section>
+      <h1>Tags</h1>
+      <ul>
+        {
+          tags.map(tag => (
+            <li>
+              <a href={`/tags/${tag}`}>#{tag}</a>
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+  </ContainerLayout>
+</MainLayout>
+
+<style>
+  ul {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: var(--jl-spacing-lg);
+  }
+
+  a {
+    font-size: 125%;
+  }
+</style>

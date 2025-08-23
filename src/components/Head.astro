@@ -1,5 +1,7 @@
 ---
-import configJson from '../../jotlynx.config.json';
+import { ClientRouter } from 'astro:transitions';
+
+import config from '@/website.config.json';
 
 type Props = {
   title?: string;
@@ -7,16 +9,33 @@ type Props = {
 };
 
 const {
-  title = configJson.meta.title ?? 'JotLynx',
-  description = configJson.meta.description ?? ''
+  title = config.meta.title ?? 'JotLynx',
+  description = config.meta.description ?? ''
 } = Astro.props;
+
+const favicon = {
+  src: config.meta.favicon?.src ?? '/favicon.svg',
+  type: config.meta.favicon?.type ?? 'image/svg+xml'
+};
 ---
 
 <head>
   <meta charset="utf-8" />
-  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="icon" type={favicon.type} href={favicon.src} />
   <meta name="viewport" content="width=device-width" />
   <meta name="generator" content={Astro.generator} />
   <title>{title}</title>
   <meta name="description" content={description} />
+  {
+    config.meta.keywords && (
+      <meta name="keywords" content={config.meta.keywords} />
+    )
+  }
+  {config.meta.author && <meta name="author" content={config.meta.author} />}
+
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:image" content={config.meta.ogImage} />
+
+  <ClientRouter />
 </head>

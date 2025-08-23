@@ -27,4 +27,4 @@ pnpm-debug.log*
 .zed/
 .qodo/
 
-src/pages/** 
+src/content/** 

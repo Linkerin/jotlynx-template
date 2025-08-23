@@ -1,0 +1,63 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+import ArticleDates from './ArticleDates.astro';
+
+interface Props {
+  article: CollectionEntry<'articles'>;
+}
+
+const { article } = Astro.props;
+
+const created = new Date(article.data.created);
+const updated = article.data?.updated ? new Date(article.data.updated) : null;
+---
+
+<section>
+  <div>
+    <a
+      class="jl-article-card-heading-link"
+      href={`/articles/${article.id}`}
+      aria-label={`To '${article.data.title}' article  page`}
+    >
+      <h2>{article.data.title}</h2>
+    </a>
+
+    <ArticleDates created={created} updated={updated} style="compact" />
+
+    {article.data.description && <p>{article.data.description}</p>}
+  </div>
+
+  <a
+    class="jl-article-card-read-more"
+    href={`/articles/${article.id}`}
+    aria-label={`To '${article.data.title}' article  page`}
+  >
+    Read more
+  </a>
+</section>
+
+<style>
+  section {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .jl-article-card-heading-link {
+    text-decoration: none;
+
+    & > h2 {
+      font-size: var(--jl-font-size-h3);
+      margin-block: 0.5em 0.25em;
+    }
+  }
+
+  .jl-article-card-read-more {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--jl-spacing-xxs);
+    font-size: var(--jl-font-size-small);
+  }
+</style>

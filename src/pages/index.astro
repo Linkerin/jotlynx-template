@@ -1,7 +1,72 @@
 ---
+import type { AstroComponentFactory } from 'astro/runtime/server/index.js';
+import { getCollection, getEntry, render } from 'astro:content';
+
+import ContainerLayout from '@/layouts/ContainerLayout.astro';
 import MainLayout from '@/layouts/MainLayout.astro';
+import getSortedArticles from '@/utils/getSortedArticles';
+import config from '@/website.config.json';
+import ArticlesList from '@/components/ArticlesList.astro';
+import ArrowRightIcon from '@assets/icons/arrow-right.svg';
+import { SPECIAL_PAGES } from '@/utils/constants';
+
+const rawArticles = await getCollection('articles');
+const sortedArticles = getSortedArticles(rawArticles);
+const articles = sortedArticles.slice(0, config.numOfRecentArticles);
+
+const homeMd = await getEntry('articles', SPECIAL_PAGES.home);
+let HomeContent: AstroComponentFactory | null = null;
+
+if (homeMd) {
+  HomeContent = (await render(homeMd)).Content;
+}
 ---
 
 <MainLayout>
-  <p>JotLynx home page: TBD</p>
+  <ContainerLayout>
+    <div class="jl-home-container">
+      {
+        HomeContent && (
+          <section id="jl-home-content">
+            <HomeContent />
+          </section>
+        )
+      }
+      <section id="jl-recent-articles">
+        <h2>Recent articles</h2>
+        <ArticlesList articles={articles} />
+
+        <a class="jl-recent-articles-all-link" href="/articles">
+          All articles <span><ArrowRightIcon /></span>
+        </a>
+      </section>
+    </div>
+  </ContainerLayout>
 </MainLayout>
+
+<style>
+  .jl-home-container:has(#jl-home-content) #jl-recent-articles {
+    border-block-start: var(--jl-outline-w-md) dashed var(--jl-color-accent);
+  }
+
+  #jl-recent-articles {
+    margin-block: var(--jl-spacing-xxl);
+
+    & > h2 {
+      color: var(--jl-color-text);
+      margin-block-end: 0;
+    }
+  }
+
+  .jl-recent-articles-all-link {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--jl-spacing-xs);
+    margin-block-start: var(--jl-spacing-xl);
+    font-size: var(--jl-font-size-h4);
+
+    & span {
+      transform: translateY(9.5%);
+    }
+  }
+</style>

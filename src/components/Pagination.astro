@@ -1,0 +1,81 @@
+---
+import type { Page } from 'astro';
+import type { CollectionEntry } from 'astro:content';
+
+import ArrowLeftIcon from '@assets/icons/arrow-left.svg';
+import ArrowRightIcon from '@assets/icons/arrow-right.svg';
+import ButtonLink from './ButtonLink.astro';
+import type { HTMLAttributes } from 'astro/types';
+
+interface Props {
+  page: Page<CollectionEntry<'articles'>>;
+}
+
+const { page } = Astro.props;
+
+const paginationBtnStyle: HTMLAttributes<'a'>['style'] = 'aspect-ratio: 1 / 1;';
+---
+
+{
+  page.lastPage > 1 && (
+    <nav aria-label="Pagination">
+      <ButtonLink
+        aria-label="To previous page"
+        href={page.url.prev}
+        disabled={!page.url.prev}
+        style={paginationBtnStyle}
+      >
+        <ArrowLeftIcon />
+      </ButtonLink>
+
+      <p>
+        {page.currentPage} <span> / {page.lastPage}</span>
+      </p>
+
+      <ButtonLink
+        aria-label="To next page"
+        href={page.url.next}
+        disabled={!page.url.next}
+        style={paginationBtnStyle}
+      >
+        <ArrowRightIcon />
+      </ButtonLink>
+    </nav>
+  )
+}
+
+<style>
+  nav {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: var(--jl-spacing-md);
+    background-color: var(--jl-color-bg);
+    background-color: color-mix(
+      in srgb,
+      var(--jl-color-bg) var(--jl-color-mix-main, 65%),
+      var(--jl-color-transparent)
+    );
+    backdrop-filter: blur(var(--jl-backdrop-blur));
+    border-radius: var(--jl-br-full);
+    width: fit-content;
+    z-index: 1;
+
+    & a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 160%;
+    }
+
+    & > p {
+      margin-block: 0;
+      font-size: 125%;
+
+      & > span {
+        color: var(--jl-color-text-secondary);
+      }
+    }
+  }
+</style>

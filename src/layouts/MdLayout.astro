@@ -1,54 +1,33 @@
 ---
-import type { MarkdownLayoutProps } from 'astro';
+import { render, type CollectionEntry } from 'astro:content';
+
 import MainLayout from './MainLayout.astro';
-import Head from '@components/Head.astro';
 import RightAside from '@components/RightAside/RightAside.astro';
+import ArticleDates from '@/components/ArticleDates.astro';
 
-type Props = MarkdownLayoutProps<{
-  title?: string;
-  description?: string;
-  tags?: string[];
-  created?: string;
-  updated?: string;
-}>;
+interface Props {
+  article: CollectionEntry<'articles'>;
+}
 
-const { frontmatter, headings } = Astro.props;
+const { article } = Astro.props;
 
-const title = frontmatter?.title;
-const created = frontmatter?.created
-  ? new Date(parseInt(frontmatter.created))
-  : null;
-const updated = frontmatter?.updated
-  ? new Date(parseInt(frontmatter.updated))
-  : null;
+const { Content, headings } = await render(article);
+
+const created = article.data.created ? new Date(article.data.created) : null;
+const updated = article.data?.updated ? new Date(article.data.updated) : null;
 ---
 
-<Head title={title} description={frontmatter?.description} />
-
-<MainLayout>
+<MainLayout title={article.data.title} description={article.data.description}>
   <div class="jl-article-container">
     <article id="jl-md-article">
-      <h1 id="_top">{title}</h1>
-      {
-        created && (
-          <div class="jl-article-meta">
-            <p>
-              Posted: <span>{created.toLocaleDateString()}</span>
-            </p>
-            {updated && (
-              <p>
-                Last updated: <span>{updated.toLocaleDateString()}</span>
-              </p>
-            )}
-          </div>
-        )
-      }
-      <slot />
+      <h1 id="_top">{article.data.title}</h1>
+      {created && <ArticleDates created={created} updated={updated} />}
+      <Content />
     </article>
   </div>
   {
-    headings && headings.length > 0 && (
-      <RightAside headings={headings} title={title} />
+    article.data.toc && headings && headings.length > 0 && (
+      <RightAside headings={headings} title={article.data.title} />
     )
   }
 </MainLayout>
@@ -61,26 +40,6 @@ const updated = frontmatter?.updated
 
   article {
     margin: 0 auto;
-    max-width: 940px;
-  }
-
-  .jl-article-meta {
-    display: flex;
-    gap: var(--jl-spacing-sm);
-    justify-content: flex-end;
-    flex-wrap: wrap;
-    font-size: var(--jl-font-size-small);
-    color: var(--jl-color-text-secondary);
-    margin-block-end: var(--jl-spacing-md);
-    margin-inline-start: auto;
-    width: 50%;
-
-    & p {
-      margin-block-end: 0px;
-    }
-
-    & p > span {
-      font-weight: var(--jl-font-weight-medium);
-    }
+    max-width: var(--jl-content-max-width);
   }
 </style>

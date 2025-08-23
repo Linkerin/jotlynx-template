@@ -1,0 +1,74 @@
+---
+import { getCollection } from 'astro:content';
+import type { GetStaticPathsOptions } from 'astro';
+
+import getSortedArticles from '@/utils/getSortedArticles';
+import MainLayout from '@/layouts/MainLayout.astro';
+import config from '@/website.config.json';
+import ContainerLayout from '@/layouts/ContainerLayout.astro';
+import Pagination from '@/components/Pagination.astro';
+import getTags from '@/utils/getTags';
+import ArticlesList from '@/components/ArticlesList.astro';
+
+export const getStaticPaths = async ({ paginate }: GetStaticPathsOptions) => {
+  const articles = await getCollection('articles');
+  const tags = getTags(articles);
+
+  console.log(tags);
+
+  return tags.flatMap(tag => {
+    const tagArticles = getSortedArticles(articles, article => {
+      if (!article.data.tags) return false;
+      return article.data.tags.includes(tag);
+    });
+
+    return paginate(tagArticles, {
+      params: { tag },
+      pageSize: config.itemsPerPage
+    });
+  });
+};
+
+const { page } = Astro.props;
+const { tag } = Astro.params;
+---
+
+<MainLayout>
+  <ContainerLayout>
+    <section>
+      <div>
+        <h1>#{tag}</h1>
+        <ArticlesList articles={page.data} />
+      </div>
+
+      <footer>
+        <Pagination page={page} />
+      </footer>
+    </section>
+  </ContainerLayout>
+</MainLayout>
+
+<style>
+  section {
+    display: flex;
+    flex-direction: column;
+    gap: var(--jl-spacing-md);
+    justify-content: space-between;
+    height: 100%;
+  }
+
+  h1 {
+    color: var(--jl-color-text);
+  }
+
+  footer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    position: sticky;
+    bottom: 0;
+    padding-block-end: var(--jl-spacing-xxl);
+    width: 100%;
+  }
+</style>

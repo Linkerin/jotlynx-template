@@ -1,7 +1,7 @@
 ---
 import Head from '@components/Head.astro';
 import Header from '@/components/Header.astro';
-import config from '@/config';
+import config from '@/website.config.json';
 
 import '@fontsource-variable/lora';
 import '@fontsource-variable/open-sans';
@@ -10,10 +10,17 @@ import '@fontsource-variable/open-sans/wght-italic.css';
 import '@/styles/reset.css';
 import '@/styles/base.css';
 import '@/styles/components.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const { title, description } = Astro.props;
 ---
 
-<html lang={config.htmlLang || 'en'}>
-  <Head />
+<html lang={config.meta.htmlLang || 'en'} dir={config.meta.dir || 'ltr'}>
+  <Head title={title} description={description} />
 
   <body>
     <Header />
@@ -28,5 +35,18 @@ import '@/styles/components.css';
   #jl-main {
     display: grid;
     grid-template-columns: minmax(0, 1fr) auto;
+    min-height: calc(100dvh - var(--jl-header-height));
   }
 </style>
+
+<script>
+  import { getColorScheme, handleHtmlProp } from '@/utils/colorScheme';
+
+  const colorScheme = getColorScheme();
+  const html = document.querySelector('html');
+  handleHtmlProp(html, colorScheme);
+
+  document.addEventListener('astro:before-swap', e => {
+    handleHtmlProp(e.newDocument.documentElement, getColorScheme());
+  });
+</script>

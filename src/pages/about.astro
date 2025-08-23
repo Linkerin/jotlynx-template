@@ -1,0 +1,29 @@
+---
+import ContainerLayout from '@/layouts/ContainerLayout.astro';
+import MainLayout from '@/layouts/MainLayout.astro';
+import { SPECIAL_PAGES } from '@/utils/constants';
+import { ActionError } from 'astro:actions';
+import { getEntry, render } from 'astro:content';
+
+const about = await getEntry('articles', SPECIAL_PAGES.about);
+if (!about) {
+  throw new ActionError({
+    message: 'About page was not found',
+    code: 'NOT_FOUND'
+  });
+}
+const { Content } = await render(about);
+---
+
+{
+  about && (
+    <MainLayout>
+      <ContainerLayout>
+        <article>
+          <h1>{about.data.title}</h1>
+          <Content />
+        </article>
+      </ContainerLayout>
+    </MainLayout>
+  )
+}
