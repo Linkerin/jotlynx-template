@@ -1,9 +1,9 @@
 ---
 import { render, type CollectionEntry } from 'astro:content';
 
-import MainLayout from './MainLayout.astro';
-import RightAside from '@components/RightAside/RightAside.astro';
 import ArticleDates from '@/components/ArticleDates.astro';
+import RightAside from '@components/RightAside/RightAside.astro';
+import MainLayout from './MainLayout.astro';
 
 interface Props {
   article: CollectionEntry<'articles'>;
@@ -17,7 +17,12 @@ const created = article.data.created ? new Date(article.data.created) : null;
 const updated = article.data?.updated ? new Date(article.data.updated) : null;
 ---
 
-<MainLayout title={article.data.title} description={article.data.description}>
+<MainLayout
+  title={article.data.title}
+  description={article.data.description}
+  keywords={article.data.keywords}
+  ogImage={article.data.ogImage}
+>
   <div class="jl-article-container">
     <article id="jl-md-article">
       <h1 id="_top">{article.data.title}</h1>

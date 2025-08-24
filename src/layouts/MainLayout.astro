@@ -1,5 +1,5 @@
 ---
-import Head from '@components/Head.astro';
+import Head, { type Props as HeadProps } from '@components/Head.astro';
 import Header from '@/components/Header.astro';
 import config from '@/website.config.json';
 
@@ -11,16 +11,18 @@ import '@/styles/reset.css';
 import '@/styles/base.css';
 import '@/styles/components.css';
 
-interface Props {
-  title?: string;
-  description?: string;
-}
+type Props = HeadProps;
 
-const { title, description } = Astro.props;
+const { title, description, keywords, ogImage } = Astro.props;
 ---
 
 <html lang={config.meta.htmlLang || 'en'} dir={config.meta.dir || 'ltr'}>
-  <Head title={title} description={description} />
+  <Head
+    title={title}
+    description={description}
+    keywords={keywords}
+    ogImage={ogImage}
+  />
 
   <body>
     <Header />

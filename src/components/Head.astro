@@ -3,14 +3,18 @@ import { ClientRouter } from 'astro:transitions';
 
 import config from '@/website.config.json';
 
-type Props = {
+export interface Props {
   title?: string;
   description?: string;
-};
+  keywords?: string;
+  ogImage?: string;
+}
 
 const {
   title = config.meta.title ?? 'JotLynx',
-  description = config.meta.description ?? ''
+  description = config.meta.description ?? '',
+  keywords = config.meta.keywords ?? '',
+  ogImage = config.meta.ogImage ?? ''
 } = Astro.props;
 
 const favicon = {
@@ -26,16 +30,13 @@ const favicon = {
   <meta name="generator" content={Astro.generator} />
   <title>{title}</title>
   <meta name="description" content={description} />
-  {
-    config.meta.keywords && (
-      <meta name="keywords" content={config.meta.keywords} />
-    )
-  }
+  {keywords && <meta name="keywords" content={keywords} />}
   {config.meta.author && <meta name="author" content={config.meta.author} />}
 
   <meta property="og:title" content={title} />
   <meta property="og:description" content={description} />
-  <meta property="og:image" content={config.meta.ogImage} />
+
+  {ogImage && <meta property="og:image" content={ogImage} />}
 
   <ClientRouter />
 </head>
