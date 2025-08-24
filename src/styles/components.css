@@ -131,6 +131,13 @@
     padding: var(--jl-spacing-md) var(--jl-spacing-lg);
   }
 
+  .astro-code {
+    background-color: light-dark(
+      var(--jl-color-bg),
+      var(--jl-color-bg-darker)
+    ) !important;
+  }
+
   table {
     width: 100%;
   }
