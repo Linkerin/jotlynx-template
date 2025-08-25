@@ -1,0 +1,109 @@
+---
+import ContainerLayout from '@/layouts/ContainerLayout.astro';
+import MainLayout from '@/layouts/MainLayout.astro';
+
+import '@pagefind/default-ui/css/ui.css';
+---
+
+<MainLayout title="Search" description="Search by articles">
+  <ContainerLayout>
+    <h1>Search</h1>
+    <div id="pagefind-search"></div>
+  </ContainerLayout>
+</MainLayout>
+
+<script>
+  function initPagefind() {
+    const searchElem: HTMLElement | null =
+      document.querySelector('#pagefind-search');
+    if (!searchElem) return;
+
+    const onIdle = window.requestIdleCallback || (cb => setTimeout(cb, 1));
+    onIdle(async () => {
+      // @ts-ignore the package is not typed
+      const { PagefindUI } = await import('@pagefind/default-ui');
+
+      new PagefindUI({
+        element: '#pagefind-search',
+        showSubResults: true,
+        showImages: false
+      });
+    });
+  }
+
+  initPagefind();
+
+  document.addEventListener('astro:after-swap', () => {
+    const searchElem: HTMLElement | null =
+      document.querySelector('#pagefind-search');
+
+    // if pagefind is already present, do not reinitialize
+    if (searchElem && searchElem.querySelector('form')) return;
+    initPagefind();
+  });
+</script>
+
+<style is:global>
+  #pagefind-search {
+    --pagefind-ui-scale: 1;
+    --pagefind-ui-primary: var(--jl-color-accent);
+    --pagefind-ui-text: var(--jl-color-text);
+    --pagefind-ui-background: var(--jl-color-bg-darker);
+    --pagefind-ui-border: var(--jl-color-neutral);
+    --pagefind-ui-tag: var(--jl-color-bg);
+    --pagefind-ui-border-width: var(--jl-outline-w-sm);
+    --pagefind-ui-border-radius: var(--jl-br-sm);
+    --pagefind-ui-image-border-radius: var(--jl-br-sm);
+
+    input {
+      font-weight: var(--jl-font-weight-text);
+      border: var(--jl-outline-w-sm) solid var(--jl-color-neutral);
+    }
+
+    input:focus-visible {
+      border-color: var(--jl-color-accent);
+      outline: var(--jl-outline-w-sm) solid var(--jl-color-accent);
+    }
+
+    .pagefind-ui__result-nested {
+      padding-inline-start: var(--jl-spacing-xl);
+    }
+
+    .pagefind-ui__result-title > a {
+      color: var(--jl-color-accent);
+      font-weight: var(--jl-font-weight-link);
+      text-underline-position: under;
+      text-underline-offset: var(--jl-text-decoration-offset);
+      text-decoration: none;
+
+      &:hover,
+      &:active {
+        text-decoration: underline;
+        text-decoration-color: var(--jl-color-accent);
+        text-decoration-style: dashed;
+        text-decoration-thickness: var(--jl-outline-w-md);
+      }
+
+      &::before {
+        margin-inline-end: var(--jl-spacing-xs);
+      }
+    }
+
+    .pagefind-ui__search-clear:focus-visible,
+    .pagefind-ui__result-title > a {
+      &:focus-visible {
+        outline: var(--jl-outline-w-lg) dashed var(--jl-color-accent);
+        outline-offset: 0.125rem;
+        z-index: 10;
+      }
+    }
+
+    .pagefind-ui__result:last-of-type {
+      border-block-end: none;
+    }
+
+    .pagefind-ui__button {
+      margin-block: var(--jl-spacing-lg);
+    }
+  }
+</style>

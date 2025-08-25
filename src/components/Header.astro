@@ -4,6 +4,7 @@ import config from '@/website.config.json';
 import ColorSchemePicker from './ColorSchemePicker.astro';
 import MobileMenu from './MobileMenu.astro';
 import Nav from './Nav.astro';
+import ButtonLink from './ButtonLink.astro';
 
 const logoText = config.logo.text;
 ---
@@ -31,9 +32,13 @@ const logoText = config.logo.text;
     </div>
 
     <div class="jl-header-icons-container">
-      <a id="jl-header-search-link" href="#search" aria-label="To search page">
+      <ButtonLink
+        id="jl-header-search-link"
+        href="/search"
+        aria-label="To search page"
+      >
         <SearchIcon />
-      </a>
+      </ButtonLink>
       <ColorSchemePicker />
 
       <MobileMenu>
@@ -134,12 +139,7 @@ const logoText = config.logo.text;
   }
 
   #jl-header-search-link {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
     aspect-ratio: 1 / 1;
-    font-size: 1.25rem; /* Can't use --jl-size-icon here as search icon looks bigger */
-    height: var(--jl-size-btn-md);
-    width: auto;
+    font-size: var(--jl-size-icon);
   }
 </style>
