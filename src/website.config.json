@@ -26,5 +26,6 @@
   },
   "hasAbout": true,
   "itemsPerPage": 10,
-  "numOfRecentArticles": 6
+  "numOfRecentArticles": 6,
+  "hasCustomCss": false
 }

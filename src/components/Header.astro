@@ -5,8 +5,7 @@ import ColorSchemePicker from './ColorSchemePicker.astro';
 import MobileMenu from './MobileMenu.astro';
 import Nav from './Nav.astro';
 
-const logoText =
-  !config.logo.image && !config.logo.text ? 'JotLynx' : config.logo.text;
+const logoText = config.logo.text;
 ---
 
 <header>
