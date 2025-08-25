@@ -20,11 +20,11 @@
     "image": "/lynx_test.webp"
   },
   "socials": {
-    "github": "",
+    "github": "https://github.com/Linkerin/jotlynx",
     "twitter": "",
     "linkedin": "",
     "bluesky": "",
-    "email": ""
+    "email": "jotlynx@snipshot.dev"
   },
   "hasAbout": true,
   "itemsPerPage": 10,

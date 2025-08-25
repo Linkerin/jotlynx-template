@@ -9,6 +9,12 @@ import config from '@/website.config.json';
 import ArticlesList from '@/components/ArticlesList.astro';
 import ArrowRightIcon from '@assets/icons/arrow-right.svg';
 import { SPECIAL_PAGES } from '@/utils/constants';
+import ButtonLink from '@/components/ButtonLink.astro';
+import GitHubIcon from '@assets/icons/github.svg';
+import TwitterIcon from '@assets/icons/brand-x.svg';
+import BlueSkyIcon from '@assets/icons/bluesky.svg';
+import LinkedInIcon from '@assets/icons/linkedin.svg';
+import EmailIcon from '@assets/icons/mail.svg';
 
 const rawArticles = await getCollection('articles');
 const sortedArticles = getSortedArticles(rawArticles);
@@ -20,6 +26,8 @@ let HomeContent: AstroComponentFactory | null = null;
 if (homeMd) {
   HomeContent = (await render(homeMd)).Content;
 }
+
+const hasSocials = Object.values(config.socials).some(social => !!social);
 ---
 
 <MainLayout>
@@ -29,6 +37,66 @@ if (homeMd) {
         HomeContent && (
           <section id="jl-home-content">
             <HomeContent />
+
+            {hasSocials && (
+              <div class="jl-socials-container">
+                {config.socials.twitter && (
+                  <ButtonLink
+                    href={config.socials.twitter}
+                    aria-label="External link to twitter profile"
+                    rel="noopener external"
+                    target="_blank"
+                    style="aspect-ratio: 1 / 1;"
+                  >
+                    <TwitterIcon />
+                  </ButtonLink>
+                )}
+                {config.socials.bluesky && (
+                  <ButtonLink
+                    href={config.socials.bluesky}
+                    aria-label="External link to BlueSky profile"
+                    rel="noopener external"
+                    target="_blank"
+                    style="aspect-ratio: 1 / 1;"
+                  >
+                    <BlueSkyIcon />
+                  </ButtonLink>
+                )}
+                {config.socials.linkedin && (
+                  <ButtonLink
+                    href={config.socials.linkedin}
+                    aria-label="External link to LinkedIn profile"
+                    rel="noopener external"
+                    target="_blank"
+                    style="aspect-ratio: 1 / 1;"
+                  >
+                    <LinkedInIcon />
+                  </ButtonLink>
+                )}
+                {config.socials.github && (
+                  <ButtonLink
+                    href={config.socials.github}
+                    aria-label="External link to Github profile"
+                    rel="noopener external"
+                    target="_blank"
+                    style="aspect-ratio: 1 / 1;"
+                  >
+                    <GitHubIcon />
+                  </ButtonLink>
+                )}
+                {config.socials.email && (
+                  <ButtonLink
+                    href={`mailto:${config.socials.email}`}
+                    aria-label="E-mail link that opens default mail client"
+                    rel="noopener external"
+                    target="_blank"
+                    style="aspect-ratio: 1 / 1;"
+                  >
+                    <EmailIcon />
+                  </ButtonLink>
+                )}
+              </div>
+            )}
           </section>
         )
       }
@@ -49,8 +117,19 @@ if (homeMd) {
     border-block-start: var(--jl-outline-w-md) dashed var(--jl-color-accent);
   }
 
+  .jl-socials-container {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    font-size: 200%;
+
+    & :global(a::after) {
+      display: none;
+    }
+  }
+
   #jl-recent-articles {
-    margin-block: var(--jl-spacing-xxl);
+    margin-block: var(--jl-spacing-xl);
 
     & > h2 {
       color: var(--jl-color-text);
