@@ -23,7 +23,7 @@ const updated = article.data?.updated ? new Date(article.data.updated) : null;
   keywords={article.data.keywords}
   ogImage={article.data.ogImage}
 >
-  <div class="jl-article-container">
+  <div class="jl-article-container" data-pagefind-body>
     <article id="jl-md-article">
       <h1 id="_top">{article.data.title}</h1>
       {created && <ArticleDates created={created} updated={updated} />}
