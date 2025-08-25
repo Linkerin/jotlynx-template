@@ -1,7 +1,6 @@
 {
   "meta": {
     "author": "",
-    "siteUrl": "",
     "title": "JotLynx website",
     "description": "JotLynx is a static site generator from Joplin markdown notes based on Astro.",
     "keywords": "",
@@ -12,6 +11,9 @@
       "src": "/favicon.ico",
       "type": "image/x-icon"
     }
+  },
+  "astro": {
+    "site": "http://localhost:4321"
   },
   "logo": {
     "text": "JotLynx",
@@ -26,6 +28,5 @@
   },
   "hasAbout": true,
   "itemsPerPage": 10,
-  "numOfRecentArticles": 6,
-  "hasCustomCss": false
+  "numOfRecentArticles": 6
 }
