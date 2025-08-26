@@ -26,6 +26,10 @@
     "bluesky": "",
     "email": "jotlynx@snipshot.dev"
   },
+  "rss": {
+    "title": "JotLynx",
+    "description": ""
+  },
   "hasAbout": true,
   "itemsPerPage": 10,
   "numOfRecentArticles": 6
