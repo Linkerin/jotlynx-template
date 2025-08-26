@@ -2,22 +2,22 @@
   "meta": {
     "author": "",
     "title": "JotLynx website",
-    "description": "JotLynx is a static site generator from Joplin markdown notes based on Astro.",
-    "keywords": "",
+    "description": "JotLynx is a command-line tool that transforms your Joplin notes into a fast Astro blog. Tag your notes and deploy - it's that easy.",
+    "keywords": "jotlynx,blog,joplin,astro,markdown,notes,ssg",
     "ogImage": "",
     "htmlLang": "en",
-    "dir": "",
+    "dir": "ltr",
     "favicon": {
       "src": "/favicon.ico",
       "type": "image/x-icon"
     }
   },
   "astro": {
-    "site": "http://localhost:4321"
+    "site": ""
   },
   "logo": {
     "text": "JotLynx",
-    "image": "/lynx_test.webp"
+    "image": ""
   },
   "socials": {
     "github": "https://github.com/Linkerin/jotlynx",
