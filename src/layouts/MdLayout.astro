@@ -31,7 +31,7 @@ const updated = article.data?.updated ? new Date(article.data.updated) : null;
     </article>
   </div>
   {
-    article.data.toc && headings && headings.length > 0 && (
+    article.data.toc !== false && headings && headings.length > 0 && (
       <RightAside headings={headings} title={article.data.title} />
     )
   }

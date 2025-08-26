@@ -6,20 +6,6 @@ import sitemap from '@astrojs/sitemap';
 import websiteConfig from './src/website.config.json';
 import deepMerge from './src/utils/deepMerge';
 
-const config = {
-  markdown: {
-    shikiConfig: {
-      themes: {
-        light: 'github-light',
-        dark: 'github-dark-dimmed'
-      },
-      defaultColor: 'light-dark()'
-    }
-  },
-  integrations: [mdx(), sitemap()],
-  prefetch: true
-};
-
 // https://astro.build/config
 export default defineConfig(
   deepMerge(
