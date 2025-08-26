@@ -13,7 +13,7 @@
     }
   },
   "astro": {
-    "site": ""
+    "site": "http://localhost:4321"
   },
   "logo": {
     "text": "JotLynx",

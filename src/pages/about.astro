@@ -18,7 +18,7 @@ const { Content } = await render(about);
 
 {
   about && (
-    <MainLayout>
+    <MainLayout title="About">
       <ContainerLayout>
         <article data-pagefind-body>
           <h1>About</h1>
@@ -28,3 +28,9 @@ const { Content } = await render(about);
     </MainLayout>
   )
 }
+
+<style>
+  article {
+    padding-block-end: var(--jl-spacing-md);
+  }
+</style>
