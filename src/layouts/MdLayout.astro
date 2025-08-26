@@ -4,7 +4,6 @@ import { render, type CollectionEntry } from 'astro:content';
 import ArticleDates from '@/components/ArticleDates.astro';
 import RightAside from '@components/RightAside/RightAside.astro';
 import MainLayout from './MainLayout.astro';
-import config from '@/website.config.json';
 
 interface Props {
   article: CollectionEntry<'articles'>;
@@ -32,7 +31,27 @@ const updated = article.data?.updated ? new Date(article.data.updated) : null;
       }}
     >
       <h1 id="_top">{article.data.title}</h1>
-      {created && <ArticleDates created={created} updated={updated} />}
+
+      <div class="jl-article-meta-container">
+        {created && <ArticleDates created={created} updated={updated} />}
+        {
+          article.data.tags && article.data.tags.length > 0 && (
+            <ul class="jl-article-tags">
+              {article.data.tags.map(tag => (
+                <li>
+                  <a
+                    href={`/tags/${tag}`}
+                    aria-label={`To articles containing '${tag}' tag`}
+                  >
+                    #{tag}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          )
+        }
+      </div>
+
       <Content />
     </article>
   </div>
@@ -56,5 +75,28 @@ const updated = article.data?.updated ? new Date(article.data.updated) : null;
   article {
     margin: 0 auto;
     max-width: var(--jl-content-max-width);
+  }
+
+  .jl-article-meta-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: var(--jl-spacing-xs);
+    margin-block-end: var(--jl-spacing-md);
+  }
+
+  .jl-article-tags {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: var(--jl-spacing-sm);
+    font-style: italic;
+    /* margin-block-start: var(--jl-spacing-md);
+    margin-block-end: var(--jl-spacing-md); */
+    font-size: var(--jl-font-size-small);
+    color: var(--jl-color-text-secondary);
+    list-style: none;
+    padding-inline: 0rem;
   }
 </style>

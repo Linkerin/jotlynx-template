@@ -51,4 +51,12 @@ import Socials from './Socials.astro';
     font-size: var(--jl-font-size-small);
     margin-block: 0px;
   }
+
+  @media (max-width: 767px) {
+    .jl-footer-container {
+      flex-direction: column-reverse;
+      gap: var(--jl-spacing-xxs);
+      justify-content: center;
+    }
+  }
 </style>

@@ -2,34 +2,33 @@
 import CalendarIcon from '@assets/icons/calendar.svg';
 
 interface Props {
-    created: Date;
-    updated?: Date | null;
-    style?: 'full' | 'compact'
+  created: Date;
+  updated?: Date | null;
+  style?: 'full' | 'compact';
 }
 
 const { created, updated, style = 'full' } = Astro.props;
 
-const dateOptions:Intl.DateTimeFormatOptions = {
+const dateOptions: Intl.DateTimeFormatOptions = {
   dateStyle: style === 'full' ? 'medium' : 'short',
   timeStyle: style === 'full' ? 'short' : undefined
-}
+};
 
 const locale = navigator.language;
 ---
 
-
 <div class="jl-article-meta">
   <p class="jl-article-meta-created">
-     {style === 'full' &&  <span><CalendarIcon /></span>} Posted: <span>{created.toLocaleString(locale, dateOptions)}</span>
+    Posted: <span>{created.toLocaleString(locale, dateOptions)}.</span>
   </p>
-  {updated && (
-    <p>|</p>
-    <p>
-      Updated: <span>{updated.toLocaleString(locale, dateOptions)}</span>
-    </p>
-  )}
+  {
+    updated && (
+      <p>
+        Updated: <span>{updated.toLocaleString(locale, dateOptions)}.</span>
+      </p>
+    )
+  }
 </div>
-
 
 <style>
   .jl-article-meta {
@@ -38,8 +37,8 @@ const locale = navigator.language;
     flex-wrap: wrap;
     font-size: var(--jl-font-size-small);
     color: var(--jl-color-text-secondary);
-    margin-block-end: var(--jl-spacing-md);
-    margin-inline-start: auto;
+    /* margin-block-end: var(--jl-spacing-md); */
+    /* margin-inline-start: auto; */
 
     & p {
       margin-block-end: 0px;

@@ -117,6 +117,7 @@
 
     @media (max-width: 767px) {
       --jl-header-height: 4rem;
+      /* --jl-footer-height: 4.25rem; */
     }
   }
 

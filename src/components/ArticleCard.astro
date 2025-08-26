@@ -25,7 +25,11 @@ const updated = article.data?.updated ? new Date(article.data.updated) : null;
 
     <ArticleDates created={created} updated={updated} style="compact" />
 
-    {article.data.description && <p>{article.data.description}</p>}
+    {
+      article.data.description && (
+        <p class="jl-article-card-description">{article.data.description}</p>
+      )
+    }
   </div>
 
   <a
@@ -43,6 +47,7 @@ const updated = article.data?.updated ? new Date(article.data.updated) : null;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    gap: var(--jl-spacing-xs);
   }
 
   .jl-article-card-heading-link {
@@ -52,6 +57,10 @@ const updated = article.data?.updated ? new Date(article.data.updated) : null;
       font-size: var(--jl-font-size-h3);
       margin-block: 0.5em 0.25em;
     }
+  }
+
+  .jl-article-card-description {
+    margin-block-start: var(--jl-spacing-xs);
   }
 
   .jl-article-card-read-more {
