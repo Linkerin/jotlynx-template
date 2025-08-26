@@ -1,6 +1,7 @@
 ---
 import Head, { type Props as HeadProps } from '@components/Head.astro';
 import Header from '@/components/Header.astro';
+import Footer from '@/components/Footer.astro';
 import config from '@/website.config.json';
 
 import '@fontsource-variable/lora';
@@ -31,6 +32,8 @@ const { title, description, keywords, ogImage } = Astro.props;
     <main id="jl-main">
       <slot />
     </main>
+
+    <Footer />
   </body>
 </html>
 
@@ -38,7 +41,9 @@ const { title, description, keywords, ogImage } = Astro.props;
   #jl-main {
     display: grid;
     grid-template-columns: minmax(0, 1fr) auto;
-    min-height: calc(100dvh - var(--jl-header-height));
+    min-height: calc(
+      100dvh - var(--jl-header-height) - var(--jl-footer-height)
+    );
   }
 </style>
 

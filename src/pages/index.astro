@@ -4,17 +4,12 @@ import { getCollection, getEntry, render } from 'astro:content';
 
 import ContainerLayout from '@/layouts/ContainerLayout.astro';
 import MainLayout from '@/layouts/MainLayout.astro';
-import getSortedArticles from '@/utils/getSortedArticles';
-import config from '@/website.config.json';
 import ArticlesList from '@/components/ArticlesList.astro';
-import ArrowRightIcon from '@assets/icons/arrow-right.svg';
+import Socials from '@/components/Socials.astro';
 import { SPECIAL_PAGES } from '@/utils/constants';
-import ButtonLink from '@/components/ButtonLink.astro';
-import GitHubIcon from '@assets/icons/github.svg';
-import TwitterIcon from '@assets/icons/brand-x.svg';
-import BlueSkyIcon from '@assets/icons/bluesky.svg';
-import LinkedInIcon from '@assets/icons/linkedin.svg';
-import EmailIcon from '@assets/icons/mail.svg';
+import getSortedArticles from '@/utils/getSortedArticles';
+import ArrowRightIcon from '@assets/icons/arrow-right.svg';
+import config from '@/website.config.json';
 
 const rawArticles = await getCollection('articles');
 const sortedArticles = getSortedArticles(rawArticles);
@@ -38,65 +33,7 @@ const hasSocials = Object.values(config.socials).some(social => !!social);
           <section id="jl-home-content">
             <HomeContent />
 
-            {hasSocials && (
-              <div class="jl-socials-container">
-                {config.socials.twitter && (
-                  <ButtonLink
-                    href={config.socials.twitter}
-                    aria-label="External link to twitter profile"
-                    rel="noopener external"
-                    target="_blank"
-                    style="aspect-ratio: 1 / 1;"
-                  >
-                    <TwitterIcon />
-                  </ButtonLink>
-                )}
-                {config.socials.bluesky && (
-                  <ButtonLink
-                    href={config.socials.bluesky}
-                    aria-label="External link to BlueSky profile"
-                    rel="noopener external"
-                    target="_blank"
-                    style="aspect-ratio: 1 / 1;"
-                  >
-                    <BlueSkyIcon />
-                  </ButtonLink>
-                )}
-                {config.socials.linkedin && (
-                  <ButtonLink
-                    href={config.socials.linkedin}
-                    aria-label="External link to LinkedIn profile"
-                    rel="noopener external"
-                    target="_blank"
-                    style="aspect-ratio: 1 / 1;"
-                  >
-                    <LinkedInIcon />
-                  </ButtonLink>
-                )}
-                {config.socials.github && (
-                  <ButtonLink
-                    href={config.socials.github}
-                    aria-label="External link to Github profile"
-                    rel="noopener external"
-                    target="_blank"
-                    style="aspect-ratio: 1 / 1;"
-                  >
-                    <GitHubIcon />
-                  </ButtonLink>
-                )}
-                {config.socials.email && (
-                  <ButtonLink
-                    href={`mailto:${config.socials.email}`}
-                    aria-label="E-mail link that opens default mail client"
-                    rel="noopener external"
-                    target="_blank"
-                    style="aspect-ratio: 1 / 1;"
-                  >
-                    <EmailIcon />
-                  </ButtonLink>
-                )}
-              </div>
-            )}
+            {hasSocials && <Socials />}
           </section>
         )
       }
@@ -115,17 +52,6 @@ const hasSocials = Object.values(config.socials).some(social => !!social);
 <style>
   .jl-home-container:has(#jl-home-content) #jl-recent-articles {
     border-block-start: var(--jl-outline-w-md) dashed var(--jl-color-accent);
-  }
-
-  .jl-socials-container {
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-    font-size: 200%;
-
-    & :global(a::after) {
-      display: none;
-    }
   }
 
   #jl-recent-articles {

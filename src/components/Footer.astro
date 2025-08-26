@@ -1,0 +1,54 @@
+---
+import config from '@/website.config.json';
+import ButtonLink from './ButtonLink.astro';
+import RssIcon from '@assets/icons/rss.svg';
+import Socials from './Socials.astro';
+---
+
+<footer>
+  <div class="jl-footer-container">
+    <p class="jl-footer-copyright">
+      © {new Date().getFullYear()}{
+        config.meta.author && ` ${config.meta.author}`
+      }. All rights reserved.
+    </p>
+
+    <Socials>
+      <ButtonLink
+        href="/rss.xml"
+        aria-label="To RSS feed"
+        slot="before"
+        style="aspect-ratio: 1 / 1;"
+      >
+        <RssIcon />
+      </ButtonLink>
+    </Socials>
+  </div>
+</footer>
+
+<style>
+  footer {
+    border-block-start: var(--jl-outline-w-sm) solid var(--jl-color-neutral);
+    height: var(--jl-footer-height);
+    width: 100%;
+  }
+
+  .jl-footer-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--jl-spacing-md);
+    height: 100%;
+    width: 100%;
+    max-width: 1280px;
+    margin-inline: auto;
+    padding-inline: var(--jl-spacing-xl);
+  }
+
+  .jl-footer-copyright {
+    display: block;
+    font-size: var(--jl-font-size-small);
+    margin-block: 0px;
+  }
+</style>

@@ -1,0 +1,100 @@
+---
+import ButtonLink from './ButtonLink.astro';
+import config from '@/website.config.json';
+import TwitterIcon from '@assets/icons/brand-x.svg';
+import BlueSkyIcon from '@assets/icons/bluesky.svg';
+import LinkedInIcon from '@assets/icons/linkedin.svg';
+import GitHubIcon from '@assets/icons/github.svg';
+import EmailIcon from '@assets/icons/mail.svg';
+import type { HTMLAttributes } from 'astro/types';
+
+type Props = HTMLAttributes<'div'>;
+
+const props = Astro.props;
+---
+
+<div class="jl-socials-container" {...props}>
+  <slot name="before" />
+  {
+    config.socials.twitter && (
+      <ButtonLink
+        href={config.socials.twitter}
+        aria-label="External link to twitter profile"
+        rel="noopener external"
+        target="_blank"
+        style="aspect-ratio: 1 / 1;"
+      >
+        <TwitterIcon />
+      </ButtonLink>
+    )
+  }
+  {
+    config.socials.bluesky && (
+      <ButtonLink
+        href={config.socials.bluesky}
+        aria-label="External link to BlueSky profile"
+        rel="noopener external"
+        target="_blank"
+        style="aspect-ratio: 1 / 1;"
+      >
+        <BlueSkyIcon />
+      </ButtonLink>
+    )
+  }
+  {
+    config.socials.linkedin && (
+      <ButtonLink
+        href={config.socials.linkedin}
+        aria-label="External link to LinkedIn profile"
+        rel="noopener external"
+        target="_blank"
+        style="aspect-ratio: 1 / 1;"
+      >
+        <LinkedInIcon />
+      </ButtonLink>
+    )
+  }
+  {
+    config.socials.github && (
+      <ButtonLink
+        href={config.socials.github}
+        aria-label="External link to Github profile"
+        rel="noopener external"
+        target="_blank"
+        style="aspect-ratio: 1 / 1;"
+      >
+        <GitHubIcon />
+      </ButtonLink>
+    )
+  }
+  {
+    config.socials.email && (
+      <ButtonLink
+        href={`mailto:${config.socials.email}`}
+        aria-label="E-mail link that opens default mail client"
+        rel="noopener external"
+        target="_blank"
+        style="aspect-ratio: 1 / 1;"
+      >
+        <EmailIcon />
+      </ButtonLink>
+    )
+  }
+  <slot name="after" />
+</div>
+
+<style>
+  .jl-socials-container {
+    --jl-socials-font-size: var(--jl-size-icon);
+
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    font-size: var(--jl-socials-font-size);
+
+    & :global(a::after) {
+      display: none;
+    }
+  }
+</style>
