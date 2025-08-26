@@ -148,6 +148,8 @@ import SunSvgIcon from '@assets/icons/sun.svg';
       display: flex;
       flex-direction: column;
       gap: var(--jl-spacing-xxs);
+      list-style: none;
+      padding-inline: 0px;
     }
 
     & li {
@@ -172,8 +174,10 @@ import SunSvgIcon from '@assets/icons/sun.svg';
       padding-inline: var(--jl-spacing-md);
       width: 100%;
 
-      &:hover {
-        background-color: var(--jl-color-bg-darker);
+      @media (hover: hover) {
+        &:hover {
+          background-color: var(--jl-color-bg-darker);
+        }
       }
 
       &:active {

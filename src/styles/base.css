@@ -176,6 +176,18 @@
     display: inline-block;
   }
 
+  ul {
+    list-style-type: disc;
+  }
+
+  ol {
+    list-style-type: decimal;
+  }
+
+  :is(ol, ul) {
+    padding-inline-start: var(--jl-spacing-lg);
+  }
+
   svg {
     color: inherit;
     height: 1em;

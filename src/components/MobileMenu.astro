@@ -61,8 +61,10 @@ import MenuIcon from '@assets/icons/menu.svg';
     font-size: 1.375rem;
     width: var(--jl-size-btn-md);
 
-    &:hover {
-      background-color: var(--jl-color-bg-darker);
+    @media (hover: hover) {
+      &:hover {
+        background-color: var(--jl-color-bg-darker);
+      }
     }
 
     &:active {

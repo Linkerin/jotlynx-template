@@ -31,8 +31,10 @@ const { disabled, href, ...props } = Astro.props;
     padding-inline: var(--jl-btn-pd-inline);
     text-decoration: none;
 
-    &:hover:not(.disabled) {
-      background-color: var(--jl-color-bg-darker);
+    @media (hover: hover) {
+      &:hover:not(.disabled) {
+        background-color: var(--jl-color-bg-darker);
+      }
     }
 
     &:active:not(.disabled) {
