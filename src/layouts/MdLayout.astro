@@ -2,6 +2,7 @@
 import { render, type CollectionEntry } from 'astro:content';
 
 import ArticleDates from '@/components/ArticleDates.astro';
+import BackToTop from '@/components/BackToTop.astro';
 import RightAside from '@components/RightAside/RightAside.astro';
 import MainLayout from './MainLayout.astro';
 
@@ -60,6 +61,7 @@ const updated = article.data?.updated ? new Date(article.data.updated) : null;
       <RightAside headings={headings} title={article.data.title} />
     )
   }
+  <BackToTop />
 </MainLayout>
 
 <style>
@@ -77,6 +79,12 @@ const updated = article.data?.updated ? new Date(article.data.updated) : null;
     max-width: var(--jl-content-max-width);
   }
 
+  #_top {
+    scroll-margin-block-start: calc(
+      var(--jl-header-height) + var(--jl-spacing-lg)
+    );
+  }
+
   .jl-article-meta-container {
     display: flex;
     flex-direction: column;
@@ -92,8 +100,6 @@ const updated = article.data?.updated ? new Date(article.data.updated) : null;
     flex-wrap: wrap;
     gap: var(--jl-spacing-sm);
     font-style: italic;
-    /* margin-block-start: var(--jl-spacing-md);
-    margin-block-end: var(--jl-spacing-md); */
     font-size: var(--jl-font-size-small);
     color: var(--jl-color-text-secondary);
     list-style: none;

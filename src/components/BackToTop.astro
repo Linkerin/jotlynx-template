@@ -1,0 +1,50 @@
+---
+import ArrowUpIcon from '@assets/icons/arrow-up.svg';
+import ButtonLink from './ButtonLink.astro';
+---
+
+<script>
+  const initBackToTop = () => {
+    const backToTopBtn: HTMLDivElement | null =
+      document.querySelector('#jl-back-to-top');
+    document.addEventListener('scroll', (e: Event) => {
+      if (!backToTopBtn) return;
+      if (window.scrollY > window.innerHeight) {
+        backToTopBtn.style.display = 'block';
+      } else {
+        backToTopBtn.style.display = 'none';
+      }
+    });
+  };
+
+  initBackToTop();
+
+  document.addEventListener('astro:after-swap', () => {
+    initBackToTop();
+  });
+</script>
+
+<div id="jl-back-to-top">
+  <ButtonLink href="#_top" aria-label="Back to top" style="">
+    <ArrowUpIcon />
+  </ButtonLink>
+</div>
+
+<style>
+  #jl-back-to-top {
+    display: none;
+    position: fixed;
+    bottom: calc(var(--jl-spacing-xxl) * 1.5);
+    right: var(--jl-spacing-xxl);
+    z-index: 2;
+
+    & :global(a) {
+      --jl-btn-link-height: 4rem;
+      --jl-btn-link-font-size: 1.75rem;
+
+      aspect-ratio: 1 / 1;
+      backdrop-filter: blur(var(--jl-backdrop-blur));
+      box-shadow: var(--jl-elevation-2);
+    }
+  }
+</style>
