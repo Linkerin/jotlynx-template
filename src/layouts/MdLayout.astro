@@ -4,18 +4,28 @@ import { render, type CollectionEntry } from 'astro:content';
 import ArticleDates from '@/components/ArticleDates.astro';
 import BackToTop from '@/components/BackToTop.astro';
 import RightAside from '@components/RightAside/RightAside.astro';
+import ArrowLeftIcon from '@assets/icons/arrow-left.svg';
+import ArrowRightIcon from '@assets/icons/arrow-right.svg';
 import MainLayout from './MainLayout.astro';
 
 interface Props {
   article: CollectionEntry<'articles'>;
+  articles: CollectionEntry<'articles'>[];
 }
 
-const { article } = Astro.props;
+const { article, articles } = Astro.props;
 
 const { Content, headings } = await render(article);
 
 const created = article.data.created ? new Date(article.data.created) : null;
 const updated = article.data?.updated ? new Date(article.data.updated) : null;
+
+const currArticleIndex = articles.findIndex(
+  articleElem => articleElem.id === article.id
+);
+const prevArticle =
+  currArticleIndex === 0 ? null : articles.at(currArticleIndex - 1);
+const nextArticle = articles.at(currArticleIndex + 1);
 ---
 
 <MainLayout
@@ -54,6 +64,47 @@ const updated = article.data?.updated ? new Date(article.data.updated) : null;
       </div>
 
       <Content />
+
+      <hr class="jl-article-footer-hr" />
+
+      <footer class="jl-article-footer">
+        {
+          prevArticle && (
+            <a
+              id="jl-prev-article"
+              href={`/articles/${prevArticle.id}`}
+              aria-label="To the previous article"
+              class="jl-article-footer-link"
+            >
+              <span>
+                <ArrowLeftIcon />
+              </span>
+              <div class="jl-article-footer-text-container">
+                <p>Previous article</p>
+                <p>{prevArticle.data.title}</p>
+              </div>
+            </a>
+          )
+        }
+        {
+          nextArticle && (
+            <a
+              id="jl-next-article"
+              href={`/articles/${nextArticle.id}`}
+              aria-label="To the next article"
+              class="jl-article-footer-link"
+            >
+              <div class="jl-article-footer-text-container">
+                <p>Next article</p>
+                <p>{nextArticle.data.title}</p>
+              </div>
+              <span>
+                <ArrowRightIcon />
+              </span>
+            </a>
+          )
+        }
+      </footer>
     </article>
   </div>
   {
@@ -104,5 +155,51 @@ const updated = article.data?.updated ? new Date(article.data.updated) : null;
     color: var(--jl-color-text-secondary);
     list-style: none;
     padding-inline: 0rem;
+  }
+
+  .jl-article-footer-hr {
+    margin-block: var(--jl-spacing-lg);
+    background-color: var(--jl-color-accent);
+  }
+
+  .jl-article-footer {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--jl-spacing-md);
+    margin-block-end: var(--jl-spacing-lg);
+  }
+
+  @media (max-width: 767px) {
+    .jl-article-footer {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+
+  .jl-article-footer-link {
+    display: flex;
+    flex-direction: row;
+    gap: var(--jl-spacing-xs);
+    text-decoration: none;
+
+    & span {
+      font-size: var(--jl-size-icon);
+    }
+  }
+
+  #jl-next-article {
+    justify-content: end;
+
+    & > div {
+      text-align: end;
+    }
+  }
+
+  .jl-article-footer-text-container {
+    & > p {
+      margin-block: 0px;
+    }
+    & > p:first-of-type {
+      color: var(--jl-color-accent);
+    }
   }
 </style>
