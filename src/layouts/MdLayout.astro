@@ -7,6 +7,7 @@ import RightAside from '@components/RightAside/RightAside.astro';
 import ArrowLeftIcon from '@assets/icons/arrow-left.svg';
 import ArrowRightIcon from '@assets/icons/arrow-right.svg';
 import MainLayout from './MainLayout.astro';
+import { AstroGlobNoMatch } from 'node_modules/astro/dist/core/errors/errors-data';
 
 interface Props {
   article: CollectionEntry<'articles'>;
@@ -32,7 +33,13 @@ const nextArticle = articles.at(currArticleIndex + 1);
   title={article.data.title}
   description={article.data.description}
   keywords={article.data.keywords}
-  ogImage={article.data.ogImage}
+  openGraph={{
+    title: article.data.ogTitle ?? article.data.title,
+    description: article.data.description ?? article.data.description,
+    image: article.data.ogImage ?? Astro.url.toString() + '/og.svg',
+    imageAlt: article.data.ogImageAlt,
+    url: Astro.url.toString()
+  }}
 >
   <div class="jl-article-container" data-pagefind-body>
     <article

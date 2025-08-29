@@ -4,7 +4,6 @@
     "title": "JotLynx website",
     "description": "JotLynx is a command-line tool that transforms your Joplin notes into a fast Astro blog. Tag your notes and deploy - it's that easy.",
     "keywords": "jotlynx,blog,joplin,astro,markdown,notes,ssg",
-    "ogImage": "",
     "htmlLang": "en",
     "dir": "ltr",
     "favicon": {
@@ -17,7 +16,7 @@
   },
   "logo": {
     "text": "JotLynx",
-    "image": ""
+    "image": "/jotlynx_logo.svg"
   },
   "socials": {
     "github": "https://github.com/Linkerin/jotlynx",
@@ -29,6 +28,19 @@
   "rss": {
     "title": "JotLynx",
     "description": ""
+  },
+  "openGraph": {
+    "title": "",
+    "description": "",
+    "siteName": "",
+    "image": "",
+    "imageAlt": "",
+    "colors": {
+      "bg": "",
+      "accent": "",
+      "text": ""
+    },
+    "noGeneratedImages": false
   },
   "hasAbout": true,
   "itemsPerPage": 10,

@@ -7,20 +7,53 @@ export interface Props {
   title?: string;
   description?: string;
   keywords?: string;
-  ogImage?: string;
+  openGraph?: {
+    image?: string;
+    imageAlt?: string;
+    title?: string;
+    description?: string;
+    url?: string;
+  };
+}
+
+function getOGImageAlt(): string | null {
+  let alt: string | null = null;
+
+  if (openGraph?.image) {
+    if (openGraph.imageAlt) {
+      alt = openGraph.imageAlt;
+    }
+    return alt;
+  }
+
+  if (config.openGraph?.image) {
+    if (config.openGraph.imageAlt) {
+      alt = config.openGraph.imageAlt;
+    }
+    return alt;
+  }
+
+  return alt;
 }
 
 const {
   title = config.meta.title ?? 'JotLynx',
   description = config.meta.description ?? '',
   keywords = config.meta.keywords ?? '',
-  ogImage = config.meta.ogImage ?? ''
+  openGraph
 } = Astro.props;
 
 const favicon = {
   src: config.meta.favicon?.src ?? '/favicon.ico',
   type: config.meta.favicon?.type ?? 'image/x-icon'
 };
+
+const ogTitle = openGraph?.title ?? config.openGraph?.title ?? title;
+const ogDescription =
+  openGraph?.description ?? config.openGraph?.description ?? description;
+const ogImage =
+  openGraph?.image ?? config.openGraph?.image ?? `${Astro.site}og.svg`;
+const openGraphImageAlt = getOGImageAlt();
 ---
 
 <head>
@@ -34,10 +67,38 @@ const favicon = {
   {keywords && <meta name="keywords" content={keywords} />}
   {config.meta.author && <meta name="author" content={config.meta.author} />}
 
-  <meta property="og:title" content={title} />
-  <meta property="og:description" content={description} />
+  <!-- OpenGraph -->
+  <meta property="og:title" content={ogTitle} />
+  <meta property="og:description" content={ogDescription} />
+  <meta property="og:type" content="website" />
+  <meta
+    property="og:url"
+    content={openGraph?.url ?? config.astro?.site ?? Astro.url ?? Astro.site}
+  />
+  <meta property="og:image" content={ogImage} />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:width" content="1200" />
+  {
+    config.openGraph?.siteName && (
+      <meta property="og:site_name" content={config.openGraph?.siteName} />
+    )
+  }
+  {
+    openGraphImageAlt && (
+      <meta property="og:image:alt" content={openGraphImageAlt} />
+    )
+  }
 
-  {ogImage && <meta property="og:image" content={ogImage} />}
+  <!-- Twitter card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={ogTitle} />
+  <meta name="twitter:description" content={ogDescription} />
+  <meta name="twitter:image" content={ogImage} />
+  {
+    openGraphImageAlt && (
+      <meta name="twitter:image:alt" content={openGraphImageAlt} />
+    )
+  }
 
   <ClientRouter />
 </head>

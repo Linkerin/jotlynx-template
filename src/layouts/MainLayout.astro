@@ -15,16 +15,11 @@ import '@/styles/custom.css';
 
 type Props = HeadProps;
 
-const { title, description, keywords, ogImage } = Astro.props;
+const headProps = Astro.props;
 ---
 
 <html lang={config.meta.htmlLang || 'en'} dir={config.meta.dir || 'ltr'}>
-  <Head
-    title={title}
-    description={description}
-    keywords={keywords}
-    ogImage={ogImage}
-  />
+  <Head {...headProps} />
 
   <body>
     <Header />
