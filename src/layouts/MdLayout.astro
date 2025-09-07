@@ -7,7 +7,6 @@ import RightAside from '@components/RightAside/RightAside.astro';
 import ArrowLeftIcon from '@assets/icons/arrow-left.svg';
 import ArrowRightIcon from '@assets/icons/arrow-right.svg';
 import MainLayout from './MainLayout.astro';
-import { AstroGlobNoMatch } from 'node_modules/astro/dist/core/errors/errors-data';
 
 interface Props {
   article: CollectionEntry<'articles'>;
@@ -24,9 +23,9 @@ const updated = article.data?.updated ? new Date(article.data.updated) : null;
 const currArticleIndex = articles.findIndex(
   articleElem => articleElem.id === article.id
 );
-const prevArticle =
+const nextArticle =
   currArticleIndex === 0 ? null : articles.at(currArticleIndex - 1);
-const nextArticle = articles.at(currArticleIndex + 1);
+const prevArticle = articles.at(currArticleIndex + 1);
 ---
 
 <MainLayout
@@ -174,6 +173,10 @@ const nextArticle = articles.at(currArticleIndex + 1);
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: var(--jl-spacing-md);
     margin-block-end: var(--jl-spacing-lg);
+
+    &:not(:has(#jl-prev-article)) {
+      grid-template-columns: minmax(0, 1fr);
+    }
   }
 
   @media (max-width: 767px) {

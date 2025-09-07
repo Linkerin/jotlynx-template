@@ -1,6 +1,4 @@
 ---
-import CalendarIcon from '@assets/icons/calendar.svg';
-
 interface Props {
   created: Date;
   updated?: Date | null;
@@ -14,7 +12,7 @@ const dateOptions: Intl.DateTimeFormatOptions = {
   timeStyle: style === 'full' ? 'short' : undefined
 };
 
-const locale = navigator.language;
+const locale = navigator.language ?? 'en-US';
 ---
 
 <div class="jl-article-meta">
